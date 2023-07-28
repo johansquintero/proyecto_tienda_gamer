@@ -26,6 +26,13 @@ public interface IMarcaService {
     MarcaPojo save(MarcaPojo newMarca);
 
     /**
+     *actualiza una marca
+     * @param marca marca a actualizar en la base de datos
+     * @return retorna un optional que contendra la marca(si existe)
+     */
+    Optional<MarcaPojo> update(MarcaPojo marca);
+
+    /**
      *Elimina una marca de base de datos
      * @param id de la marca a eliminar
      */

@@ -50,6 +50,19 @@ public class MarcaServiceImpl implements IMarcaService{
     }
 
     /**
+     *actualiza una marca
+     * @param marca marca a actualizar en la base de datos
+     * @return retorna un optional que contendra la marca(si existe)
+     */
+    @Override
+    public Optional<MarcaPojo> update(MarcaPojo marca){
+        if(iMarcaRepository.getMarca(marca.getId()).isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(iMarcaRepository.save(marca));
+    }
+
+    /**
      *Elimina una marca de base de datos
      * @param id de la marca a eliminar
      * @return true si se elimina, false simo
@@ -58,12 +71,10 @@ public class MarcaServiceImpl implements IMarcaService{
     @Transactional
     @Override
     public boolean delete(Long id) {
-        try {
-            iMarcaRepository.delete(id);
-            return true;
-        }catch (Exception e){
+        if(iMarcaRepository.getMarca(id).isEmpty()){
             return false;
         }
-
+        iMarcaRepository.delete(id);
+        return true;
     }
 }

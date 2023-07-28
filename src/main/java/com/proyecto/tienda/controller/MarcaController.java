@@ -13,7 +13,7 @@ import java.util.List;
  * Controlador de las marcas
  */
 @RestController
-@RequestMapping(path = "/api/marcas")
+@RequestMapping(path = "/marcas")
 @RequiredArgsConstructor
 public class MarcaController {
     /**
@@ -26,33 +26,52 @@ public class MarcaController {
      */
     @GetMapping
     public ResponseEntity<List<MarcaPojo>> getAll(){
-        return ResponseEntity.ok(iMarcaService.getAll());
-        //return ResponseEntity.status(HttpStatus.OK).body(iMarcaService.getAll());
-        //return new ResponseEntity<>(iMarcaService.getAll(),HttpStatus.OK);
+        return ResponseEntity.ok(this.iMarcaService.getAll());
+        //return ResponseEntity.status(HttpStatus.OK).body(this.iMarcaService.getAll());
+        //return new ResponseEntity<>(this.iMarcaService.getAll(),HttpStatus.OK);
     }
 
     /**
-     * Endpoint para retornar una marca daado su id
+     * Endpoint para retornar una marca dado su id
      * @param id id de la marca a buscar
      * @return Cuerpo que contendra la marca encontrada, se usa el operador of para evaluar en el opcional si se encontro la marca
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<MarcaPojo> getMarca(@PathVariable(name = "id") Long id){
-         return ResponseEntity.of(iMarcaService.getMarca(id));
+         return ResponseEntity.of(this.iMarcaService.getMarca(id));
     }
 
+    /**
+     * Endpoint para guardar una marca en la base de datos
+     * @param marca cuerpo del objeto marca
+     * @return marca creada en la base de datos
+     */
     @PostMapping
     public ResponseEntity<MarcaPojo> save(@RequestBody MarcaPojo marca){
         try {
-            return new ResponseEntity<>(iMarcaService.save(marca), HttpStatus.CREATED);
+            return new ResponseEntity<>(this.iMarcaService.save(marca), HttpStatus.CREATED);
         }catch (Exception e){
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().build();
         }
     }
 
-    /*
-    @DeleteMapping
+    /**
+     * Endpoint para actualizar una marca en la base de datos
+     * @param marca cuerpo del objeto marca
+     * @return marca actualizada en la base de datos
+     */
+    @PatchMapping
+    public ResponseEntity<MarcaPojo> update(@RequestBody MarcaPojo marca){
+        return ResponseEntity.of(iMarcaService.update(marca));
+    }
+
+    /**
+     * Elimina una marca dado su id
+     * @param id id de la marca a eliminar
+     * @return retorna OK si la elimina y NOT_FOUND de lo contrario
+     */
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable(name="id") Long id){
-        return ResponseEntity.
-    }*/
+        return new ResponseEntity<>(this.iMarcaService.delete(id)? HttpStatus.OK:HttpStatus.NOT_FOUND);
+    }
 }
