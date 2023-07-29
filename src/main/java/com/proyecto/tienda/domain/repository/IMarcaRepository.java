@@ -12,9 +12,9 @@ public interface IMarcaRepository {
     List<MarcaPojo> getAll();
 
     /**
-     * Devuelve una marca de la tabla marcas
+     * Devuelve una marca dado su ID
      * @param id identificador de la marca
-     * @return Envuelve en un Optional la marca encontrada
+     * @return devuelve un Optional de la marca
      */
     Optional<MarcaPojo> getMarca(Long id);
 
@@ -27,7 +27,7 @@ public interface IMarcaRepository {
 
     /**
      *Elimina una marca de base de datos
-     * @param id de la marca a eliminar
+     * @param id identifiacor de la marca a eliminar
      */
     void delete(Long id);
 }

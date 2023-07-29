@@ -23,7 +23,7 @@ public interface IMarcaService {
      * @param newMarca marca a insertar en la base de datos
      * @return retorna la marca creada
      */
-    MarcaPojo save(MarcaPojo newMarca);
+    Optional<MarcaPojo> save(MarcaPojo newMarca);
 
     /**
      *actualiza una marca

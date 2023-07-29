@@ -15,9 +15,9 @@ import java.util.List;
 public interface IMarcaMapper {
 
     /**
-     * Convierte una entidad marca a pojo
+     * Convierte una entidad marca a marca pojo
      * @param marcaEntity Entidad a convertir
-     * @return Pojo convertido
+     * @return Pojo mapeado
      */
     @Mapping(source = "id", target = "id")
     @Mapping(source = "description", target = "description")
@@ -33,8 +33,8 @@ public interface IMarcaMapper {
 
     /**
      * Convierte una lista de marcas de entidades a Pojos
-     * @param marcasEntityList Lista de
-     * @return Lista de pojos tranformada
+     * @param marcasEntityList Lista de entidades de marcas
+     * @return Lista de pojos mapeada
      */
     List<MarcaPojo> toMarcasPojo(List<MarcaEntity> marcasEntityList);
 }

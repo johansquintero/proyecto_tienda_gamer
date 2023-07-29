@@ -48,11 +48,7 @@ public class MarcaController {
      */
     @PostMapping
     public ResponseEntity<MarcaPojo> save(@RequestBody MarcaPojo marca){
-        try {
-            return new ResponseEntity<>(this.iMarcaService.save(marca), HttpStatus.CREATED);
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.of(iMarcaService.save(marca));
     }
 
     /**

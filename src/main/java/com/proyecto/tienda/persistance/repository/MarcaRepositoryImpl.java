@@ -4,6 +4,7 @@ import com.proyecto.tienda.domain.pojo.MarcaPojo;
 import com.proyecto.tienda.domain.repository.IMarcaRepository;
 import com.proyecto.tienda.persistance.entity.MarcaEntity;
 import com.proyecto.tienda.persistance.mapper.IMarcaMapper;
+import com.proyecto.tienda.persistance.crud.IMarcaCrudRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

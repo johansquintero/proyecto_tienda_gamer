@@ -9,8 +9,9 @@ import lombok.Setter;
  * Entidad de la tabla marca
  */
 @Entity
-@Table(name="marcas")
-@Getter@Setter
+@Table(name = "marcas")
+@Getter
+@Setter
 public class MarcaEntity {
     /**
      * Columna id de la tabla marca
@@ -23,10 +24,7 @@ public class MarcaEntity {
     /**
      * Columna descripcion de la tabla marca
      */
-    @Column(name="descripcion")
+    @Column(name = "descripcion")
     @NotNull
     private String description;
-
-
-
 }

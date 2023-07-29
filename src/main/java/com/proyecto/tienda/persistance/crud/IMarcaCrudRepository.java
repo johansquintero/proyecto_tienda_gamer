@@ -1,4 +1,4 @@
-package com.proyecto.tienda.persistance.repository;
+package com.proyecto.tienda.persistance.crud;
 
 import com.proyecto.tienda.persistance.entity.MarcaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
