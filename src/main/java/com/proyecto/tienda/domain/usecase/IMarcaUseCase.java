@@ -1,11 +1,11 @@
-package com.proyecto.tienda.domain.service;
+package com.proyecto.tienda.domain.usecase;
 
 import com.proyecto.tienda.domain.pojo.MarcaPojo;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IMarcaService {
+public interface IMarcaUseCase {
     /**
      * @return retorna una lista con todas la Marcas de los productos
      */

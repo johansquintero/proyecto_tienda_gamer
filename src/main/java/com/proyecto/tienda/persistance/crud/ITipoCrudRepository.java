@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ITipoCrudRepository extends JpaRepository<TipoEntity,Long> {
-    Optional<TipoEntity> findByNombre(String nombre);
+    Optional<TipoEntity> findByName(String name);
 }

@@ -3,6 +3,7 @@ package com.proyecto.tienda.persistance.mapper;
 import com.proyecto.tienda.domain.pojo.TipoPojo;
 import com.proyecto.tienda.persistance.entity.TipoEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public interface ITipoMapper {
      * @param tipoEntity Entidad a convertir
      * @return Pojo mapeado
      */
+
     TipoPojo toTipoPojo(TipoEntity tipoEntity);
 
     /**
@@ -21,6 +23,7 @@ public interface ITipoMapper {
      * @param tipoPojo pojo a convertir
      * @return Entidad convertida
      */
+    @Mapping(target = "productos",ignore = true)
     TipoEntity toTipoEtity(TipoPojo tipoPojo);
 
     /**

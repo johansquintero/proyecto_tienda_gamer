@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -20,6 +22,8 @@ public class TipoEntity {
      * nombre del tipo
      */
     @Column(name = "nombre")
-    private String nombre;
+    private String name;
 
+    @OneToMany(mappedBy = "tipo", orphanRemoval = true)
+    List<ProductoEntity> productos;
 }

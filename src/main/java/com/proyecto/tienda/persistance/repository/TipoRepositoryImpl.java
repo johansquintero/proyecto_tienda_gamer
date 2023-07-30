@@ -49,12 +49,12 @@ public class TipoRepositoryImpl implements ITipoRepository {
     /**
      * Devuelve un tipo a partir de su nombre
      *
-     * @param nombre
+     * @param name
      * @return Optional del tipo encontrado
      */
     @Override
-    public Optional<TipoPojo> getByNombre(String nombre) {
-        return iTipoCrudRepository.findByNombre(nombre).map(iTipoMapper::toTipoPojo);
+    public Optional<TipoPojo> getByName(String name) {
+        return iTipoCrudRepository.findByName(name).map(iTipoMapper::toTipoPojo);
     }
 
     /**

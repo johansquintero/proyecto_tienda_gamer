@@ -2,6 +2,7 @@ package com.proyecto.tienda.domain.service;
 
 import com.proyecto.tienda.domain.pojo.MarcaPojo;
 import com.proyecto.tienda.domain.repository.IMarcaRepository;
+import com.proyecto.tienda.domain.usecase.IMarcaUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
-public class MarcaServiceImpl implements IMarcaService {
+public class MarcaServiceImpl implements IMarcaUseCase {
 
     /**
      * Obtiene la lista de la tabla de marcas
@@ -61,6 +62,7 @@ public class MarcaServiceImpl implements IMarcaService {
      * @param marca marca a actualizar en la base de datos
      * @return retorna un optional que contendra la marca(si existe)
      */
+    @Transactional
     @Override
     public Optional<MarcaPojo> update(MarcaPojo marca) {
         if (iMarcaRepository.getMarca(marca.getId()).isEmpty()) {

@@ -1,7 +1,7 @@
 package com.proyecto.tienda.controller;
 
 import com.proyecto.tienda.domain.pojo.TipoPojo;
-import com.proyecto.tienda.domain.service.ITipoService;
+import com.proyecto.tienda.domain.usecase.ITipoUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,30 +16,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/tipos")
 public class TipoController {
-    private final ITipoService iTipoService;
+    private final ITipoUseCase iTipoUseCase;
 
     @GetMapping
     ResponseEntity<List<TipoPojo>> getAll() {
-        return ResponseEntity.ok(iTipoService.getAll());
+        return ResponseEntity.ok(iTipoUseCase.getAll());
     }
 
     @GetMapping(path = "/{id}")
     ResponseEntity<TipoPojo> getTipo(@PathVariable Long id) {
-        return ResponseEntity.of(iTipoService.getTipo(id));
+        return ResponseEntity.of(iTipoUseCase.getTipo(id));
     }
 
     @PostMapping
     ResponseEntity<TipoPojo> save(@RequestBody TipoPojo newTipo) {
-        return ResponseEntity.ok(iTipoService.save(newTipo));
+        return ResponseEntity.ok(iTipoUseCase.save(newTipo));
     }
 
     @PutMapping
     ResponseEntity<TipoPojo> update(@RequestBody TipoPojo tipo) {
-        return ResponseEntity.of(iTipoService.update(tipo));
+        return ResponseEntity.of(iTipoUseCase.update(tipo));
     }
 
     @DeleteMapping(path = "/{id}")
     ResponseEntity<Boolean> delete(@PathVariable Long id) {
-        return new ResponseEntity<>(iTipoService.delete(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(iTipoUseCase.delete(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

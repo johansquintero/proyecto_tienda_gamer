@@ -3,8 +3,6 @@ package com.proyecto.tienda.domain.pojo;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 /**
  * Objeto plano de java referente a los tipos de productos
  */
@@ -17,5 +15,5 @@ public class TipoPojo {
     /**
      * nombre del tipo
      */
-    private String nombre;
+    private String name;
 }

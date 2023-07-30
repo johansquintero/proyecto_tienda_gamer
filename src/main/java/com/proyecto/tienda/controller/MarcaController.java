@@ -1,7 +1,7 @@
 package com.proyecto.tienda.controller;
 
 import com.proyecto.tienda.domain.pojo.MarcaPojo;
-import com.proyecto.tienda.domain.service.IMarcaService;
+import com.proyecto.tienda.domain.usecase.IMarcaUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +19,16 @@ public class MarcaController {
     /**
      * Servicio de marca
      */
-    private final IMarcaService iMarcaService;
+    private final IMarcaUseCase iMarcaUseCase;
 
     /**
      * Endpoint para retornar el cuerpo de la lista de todas las marcas
      */
     @GetMapping
     public ResponseEntity<List<MarcaPojo>> getAll(){
-        return ResponseEntity.ok(this.iMarcaService.getAll());
-        //return ResponseEntity.status(HttpStatus.OK).body(this.iMarcaService.getAll());
-        //return new ResponseEntity<>(this.iMarcaService.getAll(),HttpStatus.OK);
+        return ResponseEntity.ok(this.iMarcaUseCase.getAll());
+        //return ResponseEntity.status(HttpStatus.OK).body(this.iMarcaUseCase.getAll());
+        //return new ResponseEntity<>(this.iMarcaUseCase.getAll(),HttpStatus.OK);
     }
 
     /**
@@ -38,7 +38,7 @@ public class MarcaController {
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<MarcaPojo> getMarca(@PathVariable(name = "id") Long id){
-         return ResponseEntity.of(this.iMarcaService.getMarca(id));
+         return ResponseEntity.of(this.iMarcaUseCase.getMarca(id));
     }
 
     /**
@@ -48,7 +48,7 @@ public class MarcaController {
      */
     @PostMapping
     public ResponseEntity<MarcaPojo> save(@RequestBody MarcaPojo marca){
-        return ResponseEntity.ok(iMarcaService.save(marca));
+        return ResponseEntity.ok(iMarcaUseCase.save(marca));
     }
 
     /**
@@ -58,7 +58,7 @@ public class MarcaController {
      */
     @PatchMapping
     public ResponseEntity<MarcaPojo> update(@RequestBody MarcaPojo marca){
-        return ResponseEntity.of(iMarcaService.update(marca));
+        return ResponseEntity.of(iMarcaUseCase.update(marca));
     }
 
     /**
@@ -68,6 +68,6 @@ public class MarcaController {
      */
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable(name="id") Long id){
-        return new ResponseEntity<>(this.iMarcaService.delete(id)? HttpStatus.OK:HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(this.iMarcaUseCase.delete(id)? HttpStatus.OK:HttpStatus.NOT_FOUND);
     }
 }

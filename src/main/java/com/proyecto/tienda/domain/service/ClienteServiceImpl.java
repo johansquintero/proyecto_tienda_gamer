@@ -4,8 +4,10 @@ import com.proyecto.tienda.domain.pojo.ClientePojo;
 import com.proyecto.tienda.domain.pojo.ClienteResponsePojo;
 import com.proyecto.tienda.domain.repository.IClienteRepository;
 import com.proyecto.tienda.exception.ClienteValidationExceptions;
+import com.proyecto.tienda.domain.usecase.IClienteUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
-public class ClienteServiceImpl implements IClienteService {
+public class ClienteServiceImpl implements IClienteUseCase {
     /**
      * Repositorio del cliente
      */
@@ -35,6 +37,7 @@ public class ClienteServiceImpl implements IClienteService {
     /**
      * @return retorna una lista con todos los clientes
      */
+    @Transactional(readOnly = true)
     @Override
     public List<ClientePojo> getAll() {
         return iClienteRepository.getAll();
@@ -57,6 +60,7 @@ public class ClienteServiceImpl implements IClienteService {
      * @param email email del cliente
      * @return devuelve el opcinal del cliente
      */
+    @Transactional(readOnly = true)
     @Override
     public Optional<ClientePojo> getByEmail(String email) {
         return iClienteRepository.getByEmail(email);
@@ -68,6 +72,7 @@ public class ClienteServiceImpl implements IClienteService {
      * @param newCliente Cliente a insertar en la base de datos
      * @return retorna el response con la contrasena automatica del cliente creado
      */
+    @Transactional
     @Override
     public ClienteResponsePojo save(ClientePojo newCliente) {
         if (!newCliente.getEmail().matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
@@ -90,6 +95,7 @@ public class ClienteServiceImpl implements IClienteService {
      * @param cliente Cliente a actualizar en la base de datos
      * @return retorna un opcional del cliente actualizado
      */
+    @Transactional
     @Override
     public Optional<ClientePojo> update(ClientePojo cliente) {
         if (iClienteRepository.getById(cliente.getId()).isEmpty()) {
@@ -103,6 +109,7 @@ public class ClienteServiceImpl implements IClienteService {
      *
      * @param id identifiacor del cliente a eliminar
      */
+    @Transactional
     @Override
     public boolean delete(Long id) {
         if (iClienteRepository.getById(id).isEmpty()) {

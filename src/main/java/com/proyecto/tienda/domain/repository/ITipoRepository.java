@@ -25,11 +25,11 @@ public interface ITipoRepository {
 
     /**
      * Devuelve un tipo a partir de su nombre
-     * @param nombre
+     * @param name
      * @return Optional del tipo encontrado
      */
 
-    Optional<TipoPojo> getByNombre(String nombre);
+    Optional<TipoPojo> getByName(String name);
 
     /**
      *Guarda un nuevo tipo de producto

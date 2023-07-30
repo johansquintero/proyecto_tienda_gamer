@@ -2,7 +2,7 @@ package com.proyecto.tienda.controller;
 
 import com.proyecto.tienda.domain.pojo.ClientePojo;
 import com.proyecto.tienda.domain.pojo.ClienteResponsePojo;
-import com.proyecto.tienda.domain.service.IClienteService;
+import com.proyecto.tienda.domain.usecase.IClienteUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +21,14 @@ public class ClienteController {
     /**
      * Servicio de los clientes
      */
-    private final IClienteService iClienteService;
+    private final IClienteUseCase iClienteUseCase;
 
     /**
      * @return retorna una lista con todos los clientes
      */
     @GetMapping
     public ResponseEntity<List<ClientePojo>> getAll() {
-        return ResponseEntity.ok(iClienteService.getAll());
+        return ResponseEntity.ok(iClienteUseCase.getAll());
     }
 
     /**
@@ -39,7 +39,7 @@ public class ClienteController {
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<ClientePojo> getCliente(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.of(iClienteService.getCliente(id));
+        return ResponseEntity.of(iClienteUseCase.getCliente(id));
     }
 
     /**
@@ -50,7 +50,7 @@ public class ClienteController {
      */
     @GetMapping(path = "/email/{email}")
     public ResponseEntity<ClientePojo> getClienteByEmail(@PathVariable(name = "email") String email) {
-        return ResponseEntity.of(iClienteService.getByEmail(email));
+        return ResponseEntity.of(iClienteUseCase.getByEmail(email));
     }
 
     /**
@@ -61,7 +61,7 @@ public class ClienteController {
      */
     @PostMapping
     public ResponseEntity<ClienteResponsePojo> save(@RequestBody ClientePojo newCliente) {
-        return ResponseEntity.ok(iClienteService.save(newCliente));
+        return ResponseEntity.ok(iClienteUseCase.save(newCliente));
     }
 
     /**
@@ -72,7 +72,7 @@ public class ClienteController {
      */
     @PutMapping
     public ResponseEntity<ClientePojo> update(@RequestBody ClientePojo cliente) {
-        return ResponseEntity.of(iClienteService.update(cliente));
+        return ResponseEntity.of(iClienteUseCase.update(cliente));
     }
 
     /**
@@ -82,6 +82,6 @@ public class ClienteController {
      */
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
-        return new ResponseEntity<>(iClienteService.delete(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(iClienteUseCase.delete(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }
