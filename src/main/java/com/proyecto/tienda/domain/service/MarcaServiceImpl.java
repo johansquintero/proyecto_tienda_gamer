@@ -51,12 +51,8 @@ public class MarcaServiceImpl implements IMarcaService {
      */
     @Transactional
     @Override
-    public Optional<MarcaPojo> save(MarcaPojo newMarca) {
-        if (iMarcaRepository.getMarca(newMarca.getId()).isEmpty()){
-            return Optional.of(iMarcaRepository.save(newMarca));
-        }
-        return Optional.empty();
-
+    public MarcaPojo save(MarcaPojo newMarca) {
+        return iMarcaRepository.save(newMarca);
     }
 
     /**

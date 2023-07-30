@@ -5,6 +5,9 @@ import com.proyecto.tienda.domain.pojo.MarcaPojo;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interfaz del repositorio de la marca
+ */
 public interface IMarcaRepository {
     /**
      * @return retorna una lista con todas la Marcas de los productos

@@ -48,7 +48,7 @@ public class MarcaController {
      */
     @PostMapping
     public ResponseEntity<MarcaPojo> save(@RequestBody MarcaPojo marca){
-        return ResponseEntity.of(iMarcaService.save(marca));
+        return ResponseEntity.ok(iMarcaService.save(marca));
     }
 
     /**

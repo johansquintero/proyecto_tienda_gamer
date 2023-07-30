@@ -11,7 +11,11 @@ import java.util.Map;
 @RestControllerAdvice
 public class ControllersExceptions {
     @ExceptionHandler(ClienteValidationExceptions.class)
-    public ResponseEntity<Map<String, String>> emailException(ClienteValidationExceptions clienteValidationExceptions) {
+    public ResponseEntity<Map<String, String>> clienteException(ClienteValidationExceptions clienteValidationExceptions) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap("ERROR", clienteValidationExceptions.getMessage()));
+    }
+    @ExceptionHandler(TipoValidationExceptions.class)
+    public ResponseEntity<Map<String, String>> tipoException(TipoValidationExceptions tipoValidationExceptions){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap("ERROR",tipoValidationExceptions.getMessage()));
     }
 }
