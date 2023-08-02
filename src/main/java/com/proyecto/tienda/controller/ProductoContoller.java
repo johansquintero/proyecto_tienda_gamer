@@ -35,9 +35,9 @@ public class ProductoContoller {
         return ResponseEntity.ok(iProductoUseCase.getProductoByPrice(price));
     }
 
-    @GetMapping(path = "/title/{title}")
-    public ResponseEntity<List<ProductoPojo>> getByTitle(@PathVariable String title){
-        return ResponseEntity.ok(iProductoUseCase.getProductosByTitle(title));
+    @GetMapping(path = "/name/{name}")
+    public ResponseEntity<List<ProductoPojo>> getByTitle(@PathVariable String name){
+        return ResponseEntity.ok(iProductoUseCase.getProductosByName(name));
     }
 
     @GetMapping(path = "/{id}")

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -14,8 +16,8 @@ public class ProductoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "titulo")
-    private String title;
+    @Column(name = "nombre")
+    private String name;
 
     @Column(name = "descripcion")
     private String description;
@@ -27,7 +29,7 @@ public class ProductoEntity {
     private Long typeId;
 
     @Column(name = "cantidad")
-    private Integer amount;
+    private Integer quantity;
 
     @Column(name = "ruta_imagen")
     private String imagePath;
@@ -36,4 +38,6 @@ public class ProductoEntity {
     @JoinColumn(name = "tiposid", insertable = false, updatable = false)
     private TipoEntity tipo;
 
+    @OneToMany(mappedBy = "productoEntity")
+    private List<CompraProductoEntity> compraProductos;
 }

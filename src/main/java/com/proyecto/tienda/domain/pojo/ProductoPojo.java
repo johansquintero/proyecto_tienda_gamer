@@ -7,11 +7,10 @@ import lombok.Setter;
 @Setter
 public class ProductoPojo {
     private Long id;
-    private String title;
+    private String name;
     private String description;
     private Double price;
     private Long typeId;
-    private Integer amount;
+    private Integer quantity;
     private String imagePath;
-
 }

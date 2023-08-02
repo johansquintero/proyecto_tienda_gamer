@@ -14,7 +14,7 @@ public interface IProductoUseCase {
 
     Optional<ProductoPojo> getProducto(Long id);
 
-    List<ProductoPojo> getProductosByTitle(String title);
+    List<ProductoPojo> getProductosByName(String title);
 
     List<ProductoPojo> getProductoByType(Long typeId);
 

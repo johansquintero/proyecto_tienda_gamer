@@ -24,6 +24,6 @@ public class TipoEntity {
     @Column(name = "nombre")
     private String name;
 
-    @OneToMany(mappedBy = "tipo", orphanRemoval = true)
+    @OneToMany(mappedBy = "tipo", cascade = {CascadeType.ALL})
     List<ProductoEntity> productos;
 }

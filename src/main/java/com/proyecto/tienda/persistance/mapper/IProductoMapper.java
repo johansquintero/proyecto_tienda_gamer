@@ -14,6 +14,7 @@ public interface IProductoMapper {
     ProductoPojo toProductoPojo(ProductoEntity productoEntity);
 
     @Mapping(target = "tipo", ignore = true)
+    @Mapping(target = "compraProductos", ignore = true)
     ProductoEntity toProductoEntity(ProductoPojo productoPojo);
 
     List<ProductoPojo> toProductosPojos(List<ProductoEntity> productoEntities);

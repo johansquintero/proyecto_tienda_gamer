@@ -34,8 +34,8 @@ public class ProductoServiceImpl implements IProductoUseCase {
     }
 
     @Override
-    public List<ProductoPojo> getProductosByTitle(String title) {
-        return iProductoRepository.getProductosByTitle(title);
+    public List<ProductoPojo> getProductosByName(String title) {
+        return iProductoRepository.getProductosByName(title);
     }
 
     @Override

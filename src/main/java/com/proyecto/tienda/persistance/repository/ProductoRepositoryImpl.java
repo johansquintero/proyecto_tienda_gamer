@@ -56,8 +56,8 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @return Optional del producto
      */
     @Override
-    public List<ProductoPojo> getProductosByTitle(String title) {
-        return iProductoMapper.toProductosPojos(iProductoCrudRepository.findAllByTitle(title));
+    public List<ProductoPojo> getProductosByName(String name) {
+        return iProductoMapper.toProductosPojos(iProductoCrudRepository.findAllByName(name));
     }
 
     /**

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * Entidad de la tabla clientes
  */
@@ -35,6 +37,9 @@ public class ClienteEntity {
 
     @Column(name = "active")
     private int active;
+
+    @OneToMany(mappedBy = "clienteEntity", cascade = {CascadeType.ALL})
+    private List<CompraEntity> compras;
 
     @Override
     public String toString() {
