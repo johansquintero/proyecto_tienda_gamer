@@ -1,9 +1,11 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.TipoPojo;
+import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
+import com.proyecto.tienda.domain.pojo.tipo.TipoSavePojo;
 import com.proyecto.tienda.domain.repository.ITipoRepository;
 import com.proyecto.tienda.persistance.crud.ITipoCrudRepository;
-import com.proyecto.tienda.persistance.mapper.ITipoMapper;
+import com.proyecto.tienda.persistance.mapper.tipo.ITipoMapper;
+import com.proyecto.tienda.persistance.mapper.tipo.ITipoSaveMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +28,11 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * Mapper de los tipos
      */
     private final ITipoMapper iTipoMapper;
+
+    /**
+     * Mapper para el request de los tipos
+     */
+    private final ITipoSaveMapper iTipoSaveMapper;
 
     /**
      * @return retorna una lista con todas las tipos de producto
@@ -64,8 +71,8 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @return retorna el tipo creado
      */
     @Override
-    public TipoPojo save(TipoPojo newTipo) {
-        return iTipoMapper.toTipoPojo(iTipoCrudRepository.save(iTipoMapper.toTipoEtity(newTipo)));
+    public TipoSavePojo save(TipoSavePojo newTipo) {
+        return iTipoSaveMapper.toTipoPojo(iTipoCrudRepository.save(iTipoSaveMapper.toTipoEntity(newTipo)));
     }
 
     /**

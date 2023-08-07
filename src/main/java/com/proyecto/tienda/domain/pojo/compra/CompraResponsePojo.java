@@ -1,5 +1,6 @@
-package com.proyecto.tienda.domain.pojo;
+package com.proyecto.tienda.domain.pojo.compra;
 
+import com.proyecto.tienda.domain.pojo.compraproducto.CompraProductoResponsePojo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,11 +8,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Dto de guardado de la compra
+ * Dto de consulta de una compra
  */
 @Getter
 @Setter
-public class CompraRequestPojo {
+public class CompraResponsePojo {
+
     /**
      * id de la compra
      */
@@ -38,7 +40,7 @@ public class CompraRequestPojo {
     private String paymentMethod;
 
     /**
-     * detalle de la compra que se obtiene al relacionar las compras con los productos
+     * detalle de respuesta de la compra que se obtiene al relacionar las compras con los productos
      */
-    private List<CompraProductoRequestPojo> compraProductos;
+    private List<CompraProductoResponsePojo> compraProductos;
 }

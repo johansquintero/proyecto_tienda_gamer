@@ -1,8 +1,8 @@
 package com.proyecto.tienda.domain.usecase;
 
-import com.proyecto.tienda.domain.pojo.CompraIdResponsePojo;
-import com.proyecto.tienda.domain.pojo.CompraRequestPojo;
-import com.proyecto.tienda.domain.pojo.CompraResponsePojo;
+import com.proyecto.tienda.domain.pojo.compra.CompraIdResponsePojo;
+import com.proyecto.tienda.domain.pojo.compra.CompraRequestPojo;
+import com.proyecto.tienda.domain.pojo.compra.CompraResponsePojo;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,8 +1,8 @@
 package com.proyecto.tienda.controller;
 
-import com.proyecto.tienda.domain.pojo.CompraIdResponsePojo;
-import com.proyecto.tienda.domain.pojo.CompraRequestPojo;
-import com.proyecto.tienda.domain.pojo.CompraResponsePojo;
+import com.proyecto.tienda.domain.pojo.compra.CompraIdResponsePojo;
+import com.proyecto.tienda.domain.pojo.compra.CompraRequestPojo;
+import com.proyecto.tienda.domain.pojo.compra.CompraResponsePojo;
 import com.proyecto.tienda.domain.usecase.ICompraUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

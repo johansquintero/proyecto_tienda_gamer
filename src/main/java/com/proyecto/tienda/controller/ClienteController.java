@@ -1,7 +1,7 @@
 package com.proyecto.tienda.controller;
 
-import com.proyecto.tienda.domain.pojo.ClientePojo;
-import com.proyecto.tienda.domain.pojo.ClienteResponsePojo;
+import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
+import com.proyecto.tienda.domain.pojo.cliente.ClienteResponsePojo;
 import com.proyecto.tienda.domain.usecase.IClienteUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

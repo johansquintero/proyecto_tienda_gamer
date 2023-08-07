@@ -1,9 +1,10 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.TipoPojo;
+import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
+import com.proyecto.tienda.domain.pojo.tipo.TipoSavePojo;
 import com.proyecto.tienda.domain.repository.ITipoRepository;
-import com.proyecto.tienda.exception.TipoValidationExceptions;
 import com.proyecto.tienda.domain.usecase.ITipoUseCase;
+import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,8 @@ public class TipoUseServiceImpl implements ITipoUseCase {
 
     private final ITipoRepository iTipoRepository;
 
-    private final String EXISTS_MESSAGE = "El tipo deproducto ya se encuentra registrado";
+    final String EXISTS_MESSAGE = "El tipo de deproducto ya se encuentra registrado";
+    final String NOT_EXISTS_MESSAGE = "El tipo de deproducto no se encuentra registrado";
 
 
     /**
@@ -41,7 +43,11 @@ public class TipoUseServiceImpl implements ITipoUseCase {
     @Transactional(readOnly = true)
     @Override
     public Optional<TipoPojo> getTipo(Long id) {
-        return iTipoRepository.getTipo(id);
+        Optional<TipoPojo> tipoOptional = iTipoRepository.getTipo(id);
+        if (tipoOptional.isEmpty()) {
+            throw new ErrorValidationExceptions(this.NOT_EXISTS_MESSAGE);
+        }
+        return tipoOptional;
     }
 
     /**
@@ -52,9 +58,9 @@ public class TipoUseServiceImpl implements ITipoUseCase {
      */
     @Transactional
     @Override
-    public TipoPojo save(TipoPojo newTipo) {
-        if (iTipoRepository.getByName(newTipo.getName()).isPresent()){
-            throw new TipoValidationExceptions(this.EXISTS_MESSAGE);
+    public TipoSavePojo save(TipoSavePojo newTipo) {
+        if (iTipoRepository.getByName(newTipo.getName()).isPresent()) {
+            throw new ErrorValidationExceptions(this.EXISTS_MESSAGE);
         }
         return iTipoRepository.save(newTipo);
     }
@@ -67,9 +73,9 @@ public class TipoUseServiceImpl implements ITipoUseCase {
      */
     @Transactional
     @Override
-    public Optional<TipoPojo> update(TipoPojo tipo) {
-        if (iTipoRepository.getTipo(tipo.getId()).isEmpty()){
-            return Optional.empty();
+    public Optional<TipoSavePojo> update(TipoSavePojo tipo) {
+        if (iTipoRepository.getTipo(tipo.getId()).isEmpty()) {
+            throw new ErrorValidationExceptions(this.NOT_EXISTS_MESSAGE);
         }
         return Optional.of(iTipoRepository.save(tipo));
     }
@@ -82,8 +88,8 @@ public class TipoUseServiceImpl implements ITipoUseCase {
     @Transactional
     @Override
     public boolean delete(Long id) {
-        if (iTipoRepository.getTipo(id).isEmpty()){
-            return false;
+        if (iTipoRepository.getTipo(id).isEmpty()) {
+            throw new ErrorValidationExceptions(this.NOT_EXISTS_MESSAGE);
         }
         iTipoRepository.delete(id);
         return true;

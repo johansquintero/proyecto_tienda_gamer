@@ -1,11 +1,13 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.ClientePojo;
-import com.proyecto.tienda.domain.pojo.ClienteResponsePojo;
+import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
+import com.proyecto.tienda.domain.pojo.cliente.ClienteResponsePojo;
 import com.proyecto.tienda.domain.repository.IClienteRepository;
-import com.proyecto.tienda.exception.ClienteValidationExceptions;
+import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import com.proyecto.tienda.domain.usecase.IClienteUseCase;
+import com.proyecto.tienda.security.Roles;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +30,11 @@ public class ClienteServiceImpl implements IClienteUseCase {
     /**
      * Mensajes de excepciones error
      */
-    private final String MESAGGE_EXISTS = "El cliente ya se encuentra registrado en la base de datos";
-    private final String MESAGGE_NOT_EXISTS = "El cliente no se encuentra registrado en la base de datos";
-    private final String MESAGGE_EMAIL = "El email no tiene el formato requerido";
+    final String MESAGGE_EXISTS = "El cliente ya se encuentra registrado en la base de datos";
+    final String MESAGGE_NOT_EXISTS = "El cliente no se encuentra registrado en la base de datos";
+    final String MESAGGE_EMAIL = "El email no tiene el formato requerido";
 
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * @return retorna una lista con todos los clientes
@@ -51,7 +53,11 @@ public class ClienteServiceImpl implements IClienteUseCase {
      */
     @Override
     public Optional<ClientePojo> getCliente(Long id) {
-        return iClienteRepository.getById(id);
+        Optional<ClientePojo> clienteOptional = iClienteRepository.getById(id);
+        if (clienteOptional.isEmpty()){
+            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+        }
+        return clienteOptional;
     }
 
     /**
@@ -63,7 +69,26 @@ public class ClienteServiceImpl implements IClienteUseCase {
     @Transactional(readOnly = true)
     @Override
     public Optional<ClientePojo> getByEmail(String email) {
-        return iClienteRepository.getByEmail(email);
+        Optional<ClientePojo> clienteOptional = iClienteRepository.getByEmail(email);
+        if (clienteOptional.isEmpty()){
+            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+        }
+        return clienteOptional;
+    }
+
+    /**
+     * Devuelve un cliente dado su username
+     *
+     * @param username username del cliente
+     * @return devuelve el opcinal del cliente
+     */
+    @Override
+    public Optional<ClientePojo> getByUsername(String username) {
+        Optional<ClientePojo> clienteOptional = iClienteRepository.getByUsername(username);
+        if (clienteOptional.isEmpty()){
+            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+        }
+        return clienteOptional;
     }
 
     /**
@@ -77,14 +102,15 @@ public class ClienteServiceImpl implements IClienteUseCase {
     public ClienteResponsePojo save(ClientePojo newCliente) {
         if (!newCliente.getEmail().matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
-            throw new ClienteValidationExceptions(this.MESAGGE_EMAIL);
+            throw new ErrorValidationExceptions(this.MESAGGE_EMAIL);
         }else if (iClienteRepository.getByEmail(newCliente.getEmail()).isPresent() || iClienteRepository.getByUsername(newCliente.getUsername()).isPresent()){
-            throw new ClienteValidationExceptions(this.MESAGGE_EXISTS);
+            throw new ErrorValidationExceptions(this.MESAGGE_EXISTS);
         }
 
         String passwordGenerated = generateRandomPassword(10);
-        newCliente.setPassword(passwordGenerated);
+        newCliente.setPassword(passwordEncoder.encode(passwordGenerated));
         newCliente.setActive(1);
+        newCliente.setRole(Roles.USER);
         iClienteRepository.save(newCliente);
         return new ClienteResponsePojo(passwordGenerated);
     }
@@ -99,7 +125,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
     @Override
     public Optional<ClientePojo> update(ClientePojo cliente) {
         if (iClienteRepository.getById(cliente.getId()).isEmpty()) {
-            throw new ClienteValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
         return Optional.of(iClienteRepository.save(cliente));
     }
@@ -113,7 +139,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
     @Override
     public boolean delete(Long id) {
         if (iClienteRepository.getById(id).isEmpty()) {
-            return false;
+            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
         iClienteRepository.delete(id);
         return true;

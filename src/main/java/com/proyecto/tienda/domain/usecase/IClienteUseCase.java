@@ -1,7 +1,7 @@
 package com.proyecto.tienda.domain.usecase;
 
-import com.proyecto.tienda.domain.pojo.ClientePojo;
-import com.proyecto.tienda.domain.pojo.ClienteResponsePojo;
+import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
+import com.proyecto.tienda.domain.pojo.cliente.ClienteResponsePojo;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +25,14 @@ public interface IClienteUseCase {
      * @return devuelve el opcinal del cliente
      */
     Optional<ClientePojo> getByEmail(String email);
+
+    /**
+     * Devuelve un cliente dado su username
+     * @param username username del cliente
+     * @return devuelve el opcinal del cliente
+     */
+    Optional<ClientePojo> getByUsername(String username);
+
 
     /**
      *Guarda un nuevo cliente

@@ -1,6 +1,6 @@
 package com.proyecto.tienda.controller;
 
-import com.proyecto.tienda.domain.pojo.MarcaPojo;
+import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
 import com.proyecto.tienda.domain.usecase.IMarcaUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

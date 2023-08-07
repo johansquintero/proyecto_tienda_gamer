@@ -38,6 +38,9 @@ public class ClienteEntity {
     @Column(name = "active")
     private int active;
 
+    @Column(name="role")
+    private String role;
+
     @OneToMany(mappedBy = "clienteEntity", cascade = {CascadeType.ALL})
     private List<CompraEntity> compras;
 

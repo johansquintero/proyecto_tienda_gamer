@@ -1,6 +1,7 @@
 package com.proyecto.tienda.controller;
 
-import com.proyecto.tienda.domain.pojo.TipoPojo;
+import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
+import com.proyecto.tienda.domain.pojo.tipo.TipoSavePojo;
 import com.proyecto.tienda.domain.usecase.ITipoUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,12 +30,12 @@ public class TipoController {
     }
 
     @PostMapping
-    ResponseEntity<TipoPojo> save(@RequestBody TipoPojo newTipo) {
+    ResponseEntity<TipoSavePojo> save(@RequestBody TipoSavePojo newTipo) {
         return ResponseEntity.ok(iTipoUseCase.save(newTipo));
     }
 
     @PutMapping
-    ResponseEntity<TipoPojo> update(@RequestBody TipoPojo tipo) {
+    ResponseEntity<TipoSavePojo> update(@RequestBody TipoSavePojo tipo) {
         return ResponseEntity.of(iTipoUseCase.update(tipo));
     }
 

@@ -1,6 +1,6 @@
 package com.proyecto.tienda.domain.usecase;
 
-import com.proyecto.tienda.domain.pojo.MarcaPojo;
+import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,6 @@
-package com.proyecto.tienda.persistance.mapper;
+package com.proyecto.tienda.persistance.mapper.marca;
 
-import com.proyecto.tienda.domain.pojo.MarcaPojo;
+import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
 import com.proyecto.tienda.persistance.entity.MarcaEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -20,7 +20,6 @@ public interface IMarcaMapper {
      * @return Pojo mapeado
      */
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "description", target = "description")
     MarcaPojo toMarcaPojo(MarcaEntity marcaEntity);
 
     /**
@@ -34,7 +33,7 @@ public interface IMarcaMapper {
     /**
      * Convierte una lista de marcas de entidades a Pojos
      * @param marcasEntityList Lista de entidades de marcas
-     * @return Lista de pojos mapeada
+     * @return Lista de pojos mapped
      */
     List<MarcaPojo> toMarcasPojo(List<MarcaEntity> marcasEntityList);
 }

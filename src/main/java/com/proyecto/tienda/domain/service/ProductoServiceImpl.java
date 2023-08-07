@@ -1,8 +1,9 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.ProductoPojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoPojo;
 import com.proyecto.tienda.domain.repository.IProductoRepository;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
+import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,9 @@ public class ProductoServiceImpl implements IProductoUseCase {
 
     private final IProductoRepository iProductoRepository;
 
+    final String MESAGGE_EXISTS = "El producto ya se encuentra registrado en la base de datos";
+    final String MESAGGE_NOT_EXISTS = "El producto no se encuentra registrado en la base de datos";
+
 
     @Override
     public List<ProductoPojo> getAll() {
@@ -30,6 +34,10 @@ public class ProductoServiceImpl implements IProductoUseCase {
 
     @Override
     public Optional<ProductoPojo> getProducto(Long id) {
+        Optional<ProductoPojo> productoOptional = iProductoRepository.getProducto(id);
+        if (productoOptional.isEmpty()){
+            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+        }
         return iProductoRepository.getProducto(id);
     }
 
@@ -56,7 +64,7 @@ public class ProductoServiceImpl implements IProductoUseCase {
     @Override
     public Optional<ProductoPojo> update(ProductoPojo producto) {
         if (iProductoRepository.getProducto(producto.getId()).isEmpty()){
-            return Optional.empty();
+            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
         return Optional.of(iProductoRepository.save(producto));
     }
@@ -64,7 +72,7 @@ public class ProductoServiceImpl implements IProductoUseCase {
     @Override
     public boolean delete(Long id) {
         if (iProductoRepository.getProducto(id).isEmpty()){
-            return false;
+            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
         iProductoRepository.delete(id);
         return  true;

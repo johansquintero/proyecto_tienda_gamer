@@ -1,6 +1,6 @@
 package com.proyecto.tienda.domain.repository;
 
-import com.proyecto.tienda.domain.pojo.MarcaPojo;
+import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +20,13 @@ public interface IMarcaRepository {
      * @return devuelve un Optional de la marca
      */
     Optional<MarcaPojo> getMarca(Long id);
+
+    /**
+     * Devuelve una marca dado su nombre
+     * @param name nombre de la marca
+     * @return devuelve un Optional de la marca
+     */
+    Optional<MarcaPojo> getMarcaByName(String name);
 
     /**
      *Guarda una nueva marca de producto

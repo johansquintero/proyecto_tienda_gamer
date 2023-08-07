@@ -1,7 +1,8 @@
-package com.proyecto.tienda.persistance.mapper;
+package com.proyecto.tienda.persistance.mapper.compra;
 
-import com.proyecto.tienda.domain.pojo.CompraRequestPojo;
+import com.proyecto.tienda.domain.pojo.compra.CompraRequestPojo;
 import com.proyecto.tienda.persistance.entity.CompraEntity;
+import com.proyecto.tienda.persistance.mapper.compraProducto.ICompraProductoRequestMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

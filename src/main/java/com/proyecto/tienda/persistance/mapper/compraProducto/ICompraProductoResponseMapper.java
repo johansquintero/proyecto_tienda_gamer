@@ -1,6 +1,6 @@
-package com.proyecto.tienda.persistance.mapper;
+package com.proyecto.tienda.persistance.mapper.compraProducto;
 
-import com.proyecto.tienda.domain.pojo.CompraProductoResponsePojo;
+import com.proyecto.tienda.domain.pojo.compraproducto.CompraProductoResponsePojo;
 import com.proyecto.tienda.persistance.entity.CompraProductoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

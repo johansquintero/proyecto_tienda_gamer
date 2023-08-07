@@ -26,4 +26,10 @@ public class TipoEntity {
 
     @OneToMany(mappedBy = "tipo", cascade = {CascadeType.ALL})
     List<ProductoEntity> productos;
+
+    @ManyToMany
+    @JoinTable(name = "tipos_marcas",
+            joinColumns = @JoinColumn(name = "tiposid"),
+            inverseJoinColumns = @JoinColumn(name = "marcasid"))
+    List<MarcaEntity> marcasEntities;
 }

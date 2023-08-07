@@ -1,6 +1,7 @@
 package com.proyecto.tienda.domain.usecase;
 
-import com.proyecto.tienda.domain.pojo.TipoPojo;
+import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
+import com.proyecto.tienda.domain.pojo.tipo.TipoSavePojo;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,14 +24,14 @@ public interface ITipoUseCase {
      * @param newTipo tipo a insertar en la base de datos
      * @return retorna el tipo creado
      */
-    TipoPojo save(TipoPojo newTipo);
+    TipoSavePojo save(TipoSavePojo newTipo);
 
     /**
      *actualiza un nuevo tipo de producto
      * @param tipo tipo a actualizar en la base de datos
      * @return retorna el tipo creado
      */
-    Optional<TipoPojo> update(TipoPojo tipo);
+    Optional<TipoSavePojo> update(TipoSavePojo tipo);
 
 
     /**

@@ -1,6 +1,6 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.ProductoPojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoPojo;
 import com.proyecto.tienda.domain.repository.IProductoRepository;
 import com.proyecto.tienda.persistance.crud.IProductoCrudRepository;
 import com.proyecto.tienda.persistance.mapper.IProductoMapper;

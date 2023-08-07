@@ -1,7 +1,7 @@
 package com.proyecto.tienda.controller;
 
 
-import com.proyecto.tienda.domain.pojo.ProductoPojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoPojo;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

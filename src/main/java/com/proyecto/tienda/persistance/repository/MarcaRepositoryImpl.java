@@ -1,9 +1,9 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.MarcaPojo;
+import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
 import com.proyecto.tienda.domain.repository.IMarcaRepository;
 import com.proyecto.tienda.persistance.entity.MarcaEntity;
-import com.proyecto.tienda.persistance.mapper.IMarcaMapper;
+import com.proyecto.tienda.persistance.mapper.marca.IMarcaMapper;
 import com.proyecto.tienda.persistance.crud.IMarcaCrudRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -43,6 +43,17 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
     @Override
     public Optional<MarcaPojo> getMarca(Long id) {
         return iMarcaCrudRepository.findById(id).map(iMarcaMapper::toMarcaPojo);//map corto
+    }
+
+    /**
+     * Devuelve una marca dado su nombre
+     *
+     * @param name nombre de la marca
+     * @return devuelve un Optional de la marca
+     */
+    @Override
+    public Optional<MarcaPojo> getMarcaByName(String name) {
+        return iMarcaCrudRepository.findByName(name).map(iMarcaMapper::toMarcaPojo);
     }
 
     /**

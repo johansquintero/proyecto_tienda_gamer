@@ -1,21 +1,26 @@
 package com.proyecto.tienda.exception;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.proyecto.tienda.exception.Security.UnauthorizedException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ProblemDetail;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Collections;
-import java.util.Map;
-
 @RestControllerAdvice
 public class ControllersExceptions {
-    @ExceptionHandler(ClienteValidationExceptions.class)
-    public ResponseEntity<Map<String, String>> clienteException(ClienteValidationExceptions clienteValidationExceptions) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap("ERROR", clienteValidationExceptions.getMessage()));
+    @ExceptionHandler({ErrorValidationExceptions.class})
+    public ProblemDetail clienteException(RuntimeException runtimeException) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,runtimeException.getMessage());
     }
-    @ExceptionHandler(TipoValidationExceptions.class)
-    public ResponseEntity<Map<String, String>> tipoException(TipoValidationExceptions tipoValidationExceptions){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap("ERROR",tipoValidationExceptions.getMessage()));
+    @ExceptionHandler({UnauthorizedException.class, AuthenticationException.class, JWTVerificationException.class})
+    public ProblemDetail unauthorizedException(AuthenticationException authenticationException) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, authenticationException.getMessage());
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ProblemDetail accessDeniedException(AccessDeniedException accessDeniedException) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, accessDeniedException.getMessage());
     }
 }

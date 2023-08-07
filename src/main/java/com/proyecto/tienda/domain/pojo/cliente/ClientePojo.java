@@ -1,4 +1,4 @@
-package com.proyecto.tienda.domain.pojo;
+package com.proyecto.tienda.domain.pojo.cliente;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +39,11 @@ public class ClientePojo {
      * Estado del cliente
      */
     private int active;
+
+    /**
+     * Rol del cliente
+     */
+    private String role;
 
     @Override
     public String toString() {

@@ -1,4 +1,4 @@
-package com.proyecto.tienda.domain.pojo;
+package com.proyecto.tienda.domain.pojo.marca;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,5 +17,5 @@ public class MarcaPojo {
     /**
      * descripcion de la marca
      */
-    private String description;
+    private String name;
 }

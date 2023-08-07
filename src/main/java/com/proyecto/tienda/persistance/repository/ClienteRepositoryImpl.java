@@ -1,6 +1,6 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.ClientePojo;
+import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
 import com.proyecto.tienda.domain.repository.IClienteRepository;
 import com.proyecto.tienda.persistance.mapper.IClienteMapper;
 import com.proyecto.tienda.persistance.crud.IClienteCrudRepository;

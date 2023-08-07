@@ -25,6 +25,5 @@ public class MarcaEntity {
      * Columna descripcion de la tabla marca
      */
     @Column(name = "nombre")
-    @NotNull
-    private String description;
+    private String name;
 }

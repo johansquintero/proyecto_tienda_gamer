@@ -1,6 +1,6 @@
 package com.proyecto.tienda.domain.repository;
 
-import com.proyecto.tienda.domain.pojo.ClientePojo;
+import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
 
 import java.util.List;
 import java.util.Optional;

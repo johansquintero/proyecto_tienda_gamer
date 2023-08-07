@@ -1,4 +1,4 @@
-package com.proyecto.tienda.domain.pojo;
+package com.proyecto.tienda.domain.pojo.compra;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

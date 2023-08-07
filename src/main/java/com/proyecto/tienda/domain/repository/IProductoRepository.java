@@ -1,6 +1,6 @@
 package com.proyecto.tienda.domain.repository;
 
-import com.proyecto.tienda.domain.pojo.ProductoPojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoPojo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
