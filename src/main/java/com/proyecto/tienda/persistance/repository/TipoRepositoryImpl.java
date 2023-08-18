@@ -1,11 +1,10 @@
 package com.proyecto.tienda.persistance.repository;
 
 import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
-import com.proyecto.tienda.domain.pojo.tipo.TipoSavePojo;
 import com.proyecto.tienda.domain.repository.ITipoRepository;
 import com.proyecto.tienda.persistance.crud.ITipoCrudRepository;
+import com.proyecto.tienda.persistance.entity.TipoEntity;
 import com.proyecto.tienda.persistance.mapper.tipo.ITipoMapper;
-import com.proyecto.tienda.persistance.mapper.tipo.ITipoSaveMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -29,10 +28,6 @@ public class TipoRepositoryImpl implements ITipoRepository {
      */
     private final ITipoMapper iTipoMapper;
 
-    /**
-     * Mapper para el request de los tipos
-     */
-    private final ITipoSaveMapper iTipoSaveMapper;
 
     /**
      * @return retorna una lista con todas las tipos de producto
@@ -71,17 +66,28 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @return retorna el tipo creado
      */
     @Override
-    public TipoSavePojo save(TipoSavePojo newTipo) {
-        return iTipoSaveMapper.toTipoPojo(iTipoCrudRepository.save(iTipoSaveMapper.toTipoEntity(newTipo)));
+    public TipoPojo save(TipoPojo newTipo) {
+        return this.iTipoMapper.toTipoPojo(this.iTipoCrudRepository.save(this.iTipoMapper.toTipoEntity(newTipo)));
     }
 
     /**
      * Elimina un tipo de base de datos
      *
      * @param id identifiacor del tipo a eliminar
+     * @return boolean que confirma la eliminacion del elemento
      */
     @Override
-    public void delete(Long id) {
-        iTipoCrudRepository.deleteById(id);
+    public boolean delete(Long id) {
+        Optional<TipoEntity> tipoEntityOptional = this.iTipoCrudRepository.findById(id);
+        if (tipoEntityOptional.isPresent()){
+            TipoEntity tipoEntity = tipoEntityOptional.get();
+            if (!tipoEntity.getMarcasEntities().isEmpty()){
+                tipoEntity.getMarcasEntities().forEach(marcaEntity -> marcaEntity.getTiposEntities().remove(tipoEntity));
+            }
+            iTipoCrudRepository.delete(tipoEntity);
+            return true;
+        }
+        return false;
+
     }
 }

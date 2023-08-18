@@ -19,5 +19,5 @@ public interface ICompraResponseMapper {
 
     CompraResponsePojo toCompraResponsePojo(CompraEntity compraEntity);
 
-    List<CompraResponsePojo> tComprasResponsePojo(List<CompraEntity> comprasEntitie);
+    List<CompraResponsePojo> toComprasResponsePojo(List<CompraEntity> comprasEntitie);
 }

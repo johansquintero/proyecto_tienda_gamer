@@ -9,7 +9,8 @@ import java.util.List;
 /**
  * Objeto plano de java referente a los tipos de productos
  */
-@Getter@Setter
+@Getter
+@Setter
 public class TipoPojo {
     /**
      * identificador del tipo
@@ -23,5 +24,5 @@ public class TipoPojo {
     /**
      * Marcas que mapean la relacion entre un tipo y una marca con sus atributos
      */
-    private List<MarcaPojo> marcaPojoList;
+    private List<MarcaPojo> marcas;
 }

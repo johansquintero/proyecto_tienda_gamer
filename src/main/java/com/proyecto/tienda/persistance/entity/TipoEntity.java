@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,12 +25,12 @@ public class TipoEntity {
     @Column(name = "nombre")
     private String name;
 
-    @OneToMany(mappedBy = "tipo", cascade = {CascadeType.ALL})
-    List<ProductoEntity> productos;
+    @OneToMany(mappedBy = "tipo")
+    private List<ProductoEntity> productos;
 
     @ManyToMany
     @JoinTable(name = "tipos_marcas",
             joinColumns = @JoinColumn(name = "tiposid"),
             inverseJoinColumns = @JoinColumn(name = "marcasid"))
-    List<MarcaEntity> marcasEntities;
+    private Set<MarcaEntity> marcasEntities;
 }

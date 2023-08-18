@@ -36,8 +36,10 @@ public interface IMarcaRepository {
     MarcaPojo save(MarcaPojo newMarca);
 
     /**
-     *Elimina una marca de base de datos
+     * Elimina una marca de base de datos
+     *
      * @param id identifiacor de la marca a eliminar
+     * @return
      */
-    void delete(Long id);
+    boolean delete(Long id);
 }

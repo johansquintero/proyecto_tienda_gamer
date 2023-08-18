@@ -1,7 +1,6 @@
 package com.proyecto.tienda.domain.repository;
 
 import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
-import com.proyecto.tienda.domain.pojo.tipo.TipoSavePojo;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,11 +35,13 @@ public interface ITipoRepository {
      * @param newTipo tipo a insertar en la base de datos
      * @return retorna el tipo creado
      */
-    TipoSavePojo save(TipoSavePojo newTipo);
+    TipoPojo save(TipoPojo newTipo);
 
     /**
-     *Elimina un tipo de base de datos
+     * Elimina un tipo de base de datos
+     *
      * @param id identifiacor del tipo a eliminar
+     * @return
      */
-    void delete(Long id);
+    boolean delete(Long id);
 }

@@ -7,6 +7,7 @@ import com.proyecto.tienda.persistance.mapper.marca.IMarcaMapper;
 import com.proyecto.tienda.persistance.crud.IMarcaCrudRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
      */
     @Override
     public List<MarcaPojo> getAll() {
-        return iMarcaMapper.toMarcasPojo(iMarcaCrudRepository.findAll());
+        return iMarcaMapper.toMarcaPojos(iMarcaCrudRepository.findAll());
     }
 
     /**
@@ -68,11 +69,23 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
     }
 
     /**
-     *Elimina una marca de base de datos
+     * Elimina una marca de base de datos
+     *
      * @param id de la marca a eliminar
+     * @return booleano que valida la existencia del elemento
      */
+    @Transactional
     @Override
-    public void delete(Long id) {
-        iMarcaCrudRepository.deleteById(id);
+    public boolean delete(Long id) {
+        Optional<MarcaEntity> marcaEntityOptional = iMarcaCrudRepository.findById(id);
+        if (marcaEntityOptional.isPresent()){
+            MarcaEntity marcaEntity= marcaEntityOptional.get();
+            if (!marcaEntity.getTiposEntities().isEmpty()){
+                marcaEntity.getTiposEntities().forEach(tipoEntity -> tipoEntity.getMarcasEntities().remove(marcaEntity));
+            }
+            iMarcaCrudRepository.delete(marcaEntity);
+            return true;
+        }
+        return false;
     }
 }

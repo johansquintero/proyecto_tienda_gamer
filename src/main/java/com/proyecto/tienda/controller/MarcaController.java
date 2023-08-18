@@ -56,7 +56,7 @@ public class MarcaController {
      * @param marca cuerpo del objeto marca
      * @return marca actualizada en la base de datos
      */
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<MarcaPojo> update(@RequestBody MarcaPojo marca){
         return ResponseEntity.of(iMarcaUseCase.update(marca));
     }

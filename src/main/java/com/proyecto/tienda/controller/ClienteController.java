@@ -53,18 +53,7 @@ public class ClienteController {
         return ResponseEntity.of(iClienteUseCase.getByEmail(email));
     }
 
-    /**
-     * Guarda un nuevo cliente
-     *
-     * @param newCliente Cliente a insertar en la base de datos
-     * @return retorna el opcional del response del cliente creado
-     */
-    @PostMapping
-    public ResponseEntity<ClienteResponsePojo> save(@RequestBody ClientePojo newCliente) {
-        return ResponseEntity.ok(iClienteUseCase.save(newCliente));
-    }
-
-    /**
+     /**
      * Actualiza un cliente existente
      *
      * @param cliente Cliente a actualizar en la base de datos

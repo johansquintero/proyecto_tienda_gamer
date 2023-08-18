@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -47,8 +47,8 @@ public class CompraEntity {
     /**
      * detalle de la compra que se obtiene al relacionar las compras con los productos
      */
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "compraEntity", cascade = {CascadeType.ALL})
-    private List<CompraProductoEntity> compraProductos;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "compraEntity", cascade = {CascadeType.REFRESH,CascadeType.MERGE})
+    private Set<CompraProductoEntity> compraProductos;
 
     @ManyToOne
     @JoinColumn(name = "clientesid", insertable = false, updatable = false)

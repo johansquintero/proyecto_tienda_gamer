@@ -23,12 +23,12 @@ public class CompraRepositoryImpl implements ICompraRepository {
 
     @Override
     public List<CompraResponsePojo> getAll() {
-        return iCompraResponseMapper.tComprasResponsePojo(iCompraCrudRepository.findAll());
+        return iCompraResponseMapper.toComprasResponsePojo(iCompraCrudRepository.findAll());
     }
 
     @Override
     public List<CompraResponsePojo> getAllByCustomer(Long customerId) {
-        return iCompraResponseMapper.tComprasResponsePojo(iCompraCrudRepository.findAllByCustomerId(customerId));
+        return iCompraResponseMapper.toComprasResponsePojo(iCompraCrudRepository.findAllByCustomerId(customerId));
     }
 
     @Override

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- *Pojo de marca de producto
+ * Pojo de marca de producto
  */
 
 @Getter@Setter

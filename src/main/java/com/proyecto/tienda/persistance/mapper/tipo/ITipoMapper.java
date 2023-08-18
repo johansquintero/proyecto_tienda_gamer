@@ -8,29 +8,34 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {IMarcaMapper.class})
+@Mapper(componentModel = "spring",uses = {IMarcaMapper.class})
 public interface ITipoMapper {
+
+
+    /**
+     * Convierte un Pojo a una entidad
+     *
+     * @param tipoPojo pojo a convertir
+     * @return Entidad convertida
+     */
+
+    @Mapping(source = "marcas",target = "marcasEntities")
+    @Mapping(target = "productos", ignore = true)
+    TipoEntity toTipoEntity(TipoPojo tipoPojo);
 
     /**
      * Convierte una entidad a pojo
+     *
      * @param tipoEntity Entidad a convertir
      * @return Pojo mapeado
      */
 
-    @Mapping(source="marcasEntities",target = "marcaPojoList")
+    @Mapping(source = "marcasEntities",target = "marcas")
     TipoPojo toTipoPojo(TipoEntity tipoEntity);
 
     /**
-     * Convierte un Pojo a una entidad
-     * @param tipoPojo pojo a convertir
-     * @return Entidad convertida
-     */
-    @Mapping(source = "marcaPojoList",target="marcasEntities")
-    @Mapping(target = "productos",ignore = true)
-    TipoEntity toTipoEntity(TipoPojo tipoPojo);
-
-    /**
      * Convierte una lista de tipos de entidades a Pojos
+     *
      * @param tipoEntities Lista de entidades de los tipos
      * @return Lista de pojos mapeada
      */

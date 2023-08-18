@@ -1,9 +1,10 @@
 package com.proyecto.tienda.persistance.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 /**
  * Entidad de la tabla marca
@@ -26,4 +27,7 @@ public class MarcaEntity {
      */
     @Column(name = "nombre")
     private String name;
+
+    @ManyToMany(mappedBy = "marcasEntities")
+    private Set<TipoEntity> tiposEntities;
 }

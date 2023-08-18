@@ -45,11 +45,12 @@ public class JwtAuthenticationProvider {
         Date validity = new Date(now.getTime()+36000000);
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         String tokenCreated = JWT.create()
-                .withClaim("clienteId",clientePojo.getId())
+                .withClaim("id",clientePojo.getId())
                 .withClaim("username",clientePojo.getUsername())
                 .withClaim("email",clientePojo.getEmail())
                 .withClaim("telephone",clientePojo.getTelephone())
                 .withClaim("role",clientePojo.getRole())
+                .withClaim("address",clientePojo.getAddress())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .sign(algorithm);
