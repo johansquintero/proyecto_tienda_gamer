@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,4 +31,7 @@ public class MarcaEntity {
 
     @ManyToMany(mappedBy = "marcasEntities")
     private Set<TipoEntity> tiposEntities;
+
+    @OneToMany(mappedBy = "marca")
+    private Set<ProductoEntity> productos;
 }

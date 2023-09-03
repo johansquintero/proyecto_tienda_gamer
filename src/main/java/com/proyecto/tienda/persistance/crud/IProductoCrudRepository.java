@@ -11,6 +11,6 @@ public interface IProductoCrudRepository extends JpaRepository<ProductoEntity, L
 
     List<ProductoEntity> findAllByPriceLessThanEqual(Double price);
 
-    List<ProductoEntity> findAllByTypeId(Long typeId);
+    List<ProductoEntity> findAllByTipoId(Long typeId);
 
 }

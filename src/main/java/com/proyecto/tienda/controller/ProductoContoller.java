@@ -1,7 +1,8 @@
 package com.proyecto.tienda.controller;
 
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoPojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
+import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,38 +21,38 @@ public class ProductoContoller {
     private final IProductoUseCase iProductoUseCase;
 
     @GetMapping
-    public ResponseEntity<List<ProductoPojo>> getAll(){
+    public ResponseEntity<List<ProductoResponseDto>> getAll(){
         return ResponseEntity.ok(iProductoUseCase.getAll());
     }
 
     @GetMapping(path = "/page/{page}")
-    public Page<ProductoPojo> page(@PathVariable Integer page) {
+    public Page<ProductoResponseDto> page(@PathVariable Integer page) {
         Pageable pageable = PageRequest.of(page, 2);
         return iProductoUseCase.getPage(pageable);
     }
 
     @GetMapping(path = "/price/{price}")
-    public ResponseEntity<List<ProductoPojo>> getByPrice(@PathVariable Double price){
+    public ResponseEntity<List<ProductoResponseDto>> getByPrice(@PathVariable Double price){
         return ResponseEntity.ok(iProductoUseCase.getProductoByPrice(price));
     }
 
     @GetMapping(path = "/name/{name}")
-    public ResponseEntity<List<ProductoPojo>> getByTitle(@PathVariable String name){
+    public ResponseEntity<List<ProductoResponseDto>> getByTitle(@PathVariable String name){
         return ResponseEntity.ok(iProductoUseCase.getProductosByName(name));
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<ProductoPojo> getProducto(@PathVariable Long id){
+    public ResponseEntity<ProductoResponseDto> getProducto(@PathVariable Long id){
         return ResponseEntity.of(iProductoUseCase.getProducto(id));
     }
     @PostMapping
-    public ResponseEntity<ProductoPojo> save(@RequestBody ProductoPojo productoPojo){
-        return ResponseEntity.ok(iProductoUseCase.save(productoPojo));
+    public ResponseEntity<ProductoResponseDto> save(@RequestBody ProductoRequestDto productoRequestDto){
+        return ResponseEntity.ok(iProductoUseCase.save(productoRequestDto));
     }
 
     @PutMapping
-    public ResponseEntity<ProductoPojo> update(@RequestBody ProductoPojo productoPojo){
-        return ResponseEntity.of(iProductoUseCase.update(productoPojo));
+    public ResponseEntity<ProductoResponseDto> update(@RequestBody ProductoRequestDto productoRequestDto){
+        return ResponseEntity.of(iProductoUseCase.update(productoRequestDto));
     }
 
     @DeleteMapping(path = "/{id}")

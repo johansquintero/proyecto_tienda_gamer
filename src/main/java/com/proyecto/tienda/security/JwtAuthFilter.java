@@ -30,7 +30,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     /**
      * Verifica si a la URI no se le debe aplicar el filtro
      * @param request current HTTP request Petición a validar
-     * @return True la URI existe en la lista blanca, false de lo contrario
+     * @return True si la URI existe en la lista blanca,de lo contrario retorna false
      * @throws ServletException
      */
     @Override

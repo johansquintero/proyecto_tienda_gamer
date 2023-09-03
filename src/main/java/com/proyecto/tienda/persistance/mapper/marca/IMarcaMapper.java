@@ -20,6 +20,7 @@ public interface IMarcaMapper{
      * @return Entidad convertida
      */
     @Mapping(target = "tiposEntities",ignore = true)
+    @Mapping(target = "productos",ignore = true)
     MarcaEntity toMarcaEntity(MarcaPojo marcaPojo);
 
     /**

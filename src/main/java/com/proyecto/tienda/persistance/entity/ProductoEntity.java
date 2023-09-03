@@ -16,6 +16,12 @@ public class ProductoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "tiposid")
+    private long tipoId;
+
+    @Column(name = "marcasid")
+    private long marcaId;
+
     @Column(name = "nombre")
     private String name;
 
@@ -24,9 +30,6 @@ public class ProductoEntity {
 
     @Column(name = "precio")
     private Double price;
-
-    @Column(name = "tiposid")
-    private Long typeId;
 
     @Column(name = "cantidad")
     private Integer quantity;
@@ -37,6 +40,10 @@ public class ProductoEntity {
     @ManyToOne
     @JoinColumn(name = "tiposid", insertable = false, updatable = false)
     private TipoEntity tipo;
+
+    @ManyToOne
+    @JoinColumn(name = "marcasid", insertable = false,  updatable = false)
+    private MarcaEntity marca;
 
     @OneToMany(mappedBy = "productoEntity")
     private List<CompraProductoEntity> compraProductos;

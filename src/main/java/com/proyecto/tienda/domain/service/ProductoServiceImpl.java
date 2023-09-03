@@ -1,6 +1,7 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoPojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
+import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.repository.IProductoRepository;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
@@ -23,18 +24,18 @@ public class ProductoServiceImpl implements IProductoUseCase {
 
 
     @Override
-    public List<ProductoPojo> getAll() {
+    public List<ProductoResponseDto> getAll() {
         return iProductoRepository.getAll();
     }
 
     @Override
-    public Page<ProductoPojo> getPage(Pageable pageable) {
+    public Page<ProductoResponseDto> getPage(Pageable pageable) {
         return iProductoRepository.getPage(pageable);
     }
 
     @Override
-    public Optional<ProductoPojo> getProducto(Long id) {
-        Optional<ProductoPojo> productoOptional = iProductoRepository.getProducto(id);
+    public Optional<ProductoResponseDto> getProducto(Long id) {
+        Optional<ProductoResponseDto> productoOptional = iProductoRepository.getProducto(id);
         if (productoOptional.isEmpty()){
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
@@ -42,27 +43,27 @@ public class ProductoServiceImpl implements IProductoUseCase {
     }
 
     @Override
-    public List<ProductoPojo> getProductosByName(String title) {
+    public List<ProductoResponseDto> getProductosByName(String title) {
         return iProductoRepository.getProductosByName(title);
     }
 
     @Override
-    public List<ProductoPojo> getProductoByType(Long typeId) {
-        return iProductoRepository.getProductoByType(typeId);
+    public List<ProductoResponseDto> getProductoByTipo(Long typeId) {
+        return iProductoRepository.getProductoByTipo(typeId);
     }
 
     @Override
-    public List<ProductoPojo> getProductoByPrice(Double price) {
+    public List<ProductoResponseDto> getProductoByPrice(Double price) {
         return iProductoRepository.getProductoByPrice(price);
     }
 
     @Override
-    public ProductoPojo save(ProductoPojo newProducto) {
+    public ProductoResponseDto save(ProductoRequestDto newProducto) {
         return iProductoRepository.save(newProducto);
     }
 
     @Override
-    public Optional<ProductoPojo> update(ProductoPojo producto) {
+    public Optional<ProductoResponseDto> update(ProductoRequestDto producto) {
         if (iProductoRepository.getProducto(producto.getId()).isEmpty()){
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }

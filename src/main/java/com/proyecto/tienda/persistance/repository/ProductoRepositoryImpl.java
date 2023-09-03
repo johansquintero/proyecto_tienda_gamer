@@ -1,9 +1,11 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoPojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
+import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.repository.IProductoRepository;
 import com.proyecto.tienda.persistance.crud.IProductoCrudRepository;
-import com.proyecto.tienda.persistance.mapper.IProductoMapper;
+import com.proyecto.tienda.persistance.mapper.producto.IProductoRequestMapper;
+import com.proyecto.tienda.persistance.mapper.producto.IProductoResponseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +19,8 @@ import java.util.Optional;
 public class ProductoRepositoryImpl implements IProductoRepository {
 
     private final IProductoCrudRepository iProductoCrudRepository;
-    private final IProductoMapper iProductoMapper;
+    private final IProductoRequestMapper iProductoRequestMapper;
+    private final IProductoResponseMapper iProductoResponseMapper;
 
     /**
      * Obtiene el listado de todos los productos
@@ -25,8 +28,8 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @return lista de productos
      */
     @Override
-    public List<ProductoPojo> getAll() {
-        return iProductoMapper.toProductosPojos(iProductoCrudRepository.findAll());
+    public List<ProductoResponseDto> getAll() {
+        return iProductoResponseMapper.toProductosResponseDto(iProductoCrudRepository.findAll());
     }
 
     /**
@@ -34,8 +37,8 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @return pagina del producto
      */
     @Override
-    public Page<ProductoPojo> getPage(Pageable pageable) {
-        return iProductoCrudRepository.findAll(pageable).map(iProductoMapper::toProductoPojo);
+    public Page<ProductoResponseDto> getPage(Pageable pageable) {
+        return iProductoCrudRepository.findAll(pageable).map(iProductoResponseMapper::toProductoResponseDto);
     }
 
     /**
@@ -45,19 +48,19 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @return optional del producto
      */
     @Override
-    public Optional<ProductoPojo> getProducto(Long id) {
-        return iProductoCrudRepository.findById(id).map(iProductoMapper::toProductoPojo);
+    public Optional<ProductoResponseDto> getProducto(Long id) {
+        return iProductoCrudRepository.findById(id).map(iProductoResponseMapper::toProductoResponseDto);
     }
 
     /**
      * obtiene un producto a partir de su titulo
      *
-     * @param title titulo a buscar
+     * @param name titulo a buscar
      * @return Optional del producto
      */
     @Override
-    public List<ProductoPojo> getProductosByName(String name) {
-        return iProductoMapper.toProductosPojos(iProductoCrudRepository.findAllByName(name));
+    public List<ProductoResponseDto> getProductosByName(String name) {
+        return iProductoResponseMapper.toProductosResponseDto(iProductoCrudRepository.findAllByName(name));
     }
 
     /**
@@ -67,8 +70,8 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @return Lista de los tipos encontrados
      */
     @Override
-    public List<ProductoPojo> getProductoByType(Long typeId) {
-        return iProductoMapper.toProductosPojos(iProductoCrudRepository.findAllByTypeId(typeId));
+    public List<ProductoResponseDto> getProductoByTipo(Long typeId) {
+        return iProductoResponseMapper.toProductosResponseDto(iProductoCrudRepository.findAllByTipoId(typeId));
     }
 
     /**
@@ -78,8 +81,8 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @return lista de los productos
      */
     @Override
-    public List<ProductoPojo> getProductoByPrice(Double price) {
-        return iProductoMapper.toProductosPojos(iProductoCrudRepository.findAllByPriceLessThanEqual(price));
+    public List<ProductoResponseDto> getProductoByPrice(Double price) {
+        return iProductoResponseMapper.toProductosResponseDto(iProductoCrudRepository.findAllByPriceLessThanEqual(price));
     }
 
     /**
@@ -89,8 +92,8 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @return producto guardado
      */
     @Override
-    public ProductoPojo save(ProductoPojo newProducto) {
-        return iProductoMapper.toProductoPojo(iProductoCrudRepository.save(iProductoMapper.toProductoEntity(newProducto)));
+    public ProductoResponseDto save(ProductoRequestDto newProducto) {
+        return iProductoResponseMapper.toProductoResponseDto(iProductoCrudRepository.save(iProductoRequestMapper.toProductoEntity(newProducto)));
     }
 
     /**

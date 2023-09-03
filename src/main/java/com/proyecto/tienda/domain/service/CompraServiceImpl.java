@@ -1,9 +1,10 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoPojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
 import com.proyecto.tienda.domain.pojo.compra.CompraIdResponsePojo;
 import com.proyecto.tienda.domain.pojo.compra.CompraRequestPojo;
 import com.proyecto.tienda.domain.pojo.compra.CompraResponsePojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.repository.ICompraRepository;
 import com.proyecto.tienda.domain.usecase.ICompraUseCase;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
@@ -45,14 +46,6 @@ public class CompraServiceImpl implements ICompraUseCase {
     @Override
     public CompraIdResponsePojo save(CompraRequestPojo compraRequestPojo) {
         CompraIdResponsePojo responsePojo = iCompraRepository.save(compraRequestPojo);
-        compraRequestPojo.getCompraProductos().forEach(compraProductoRequest -> {
-            //obtienemos el producto actual
-            ProductoPojo productoActual = iProductoUseCase.getProducto(compraProductoRequest.getProductId()).get();
-            //le resta la cantidad a comprar al producto actual
-            productoActual.setQuantity(productoActual.getQuantity() - compraProductoRequest.getQuantity());
-            //se actualiza
-            iProductoUseCase.save(productoActual);
-        });
         return responsePojo;
     }
 }

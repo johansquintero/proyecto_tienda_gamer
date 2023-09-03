@@ -1,6 +1,7 @@
 package com.proyecto.tienda.domain.usecase;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoPojo;
+import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
+import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -8,21 +9,21 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IProductoUseCase {
-    List<ProductoPojo> getAll();
+    List<ProductoResponseDto> getAll();
 
-    Page<ProductoPojo> getPage(Pageable pageable);
+    Page<ProductoResponseDto> getPage(Pageable pageable);
 
-    Optional<ProductoPojo> getProducto(Long id);
+    Optional<ProductoResponseDto> getProducto(Long id);
 
-    List<ProductoPojo> getProductosByName(String title);
+    List<ProductoResponseDto> getProductosByName(String title);
 
-    List<ProductoPojo> getProductoByType(Long typeId);
+    List<ProductoResponseDto> getProductoByTipo(Long typeId);
 
-    List<ProductoPojo> getProductoByPrice(Double price);
+    List<ProductoResponseDto> getProductoByPrice(Double price);
 
-    ProductoPojo save(ProductoPojo newProducto);
+    ProductoResponseDto save(ProductoRequestDto newProducto);
 
-    Optional<ProductoPojo> update(ProductoPojo producto);
+    Optional<ProductoResponseDto> update(ProductoRequestDto producto);
 
     boolean delete(Long id);
 }
