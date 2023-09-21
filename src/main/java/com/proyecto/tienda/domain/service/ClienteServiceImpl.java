@@ -1,7 +1,7 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
-import com.proyecto.tienda.domain.pojo.cliente.ClienteResponsePojo;
+import com.proyecto.tienda.domain.dto.cliente.ClienteDto;
+import com.proyecto.tienda.domain.dto.cliente.ClienteResponseDto;
 import com.proyecto.tienda.domain.repository.IClienteRepository;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import com.proyecto.tienda.domain.usecase.IClienteUseCase;
@@ -41,7 +41,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
      */
     @Transactional(readOnly = true)
     @Override
-    public List<ClientePojo> getAll() {
+    public List<ClienteDto> getAll() {
         return iClienteRepository.getAll();
     }
 
@@ -52,8 +52,8 @@ public class ClienteServiceImpl implements IClienteUseCase {
      * @return devuelve el opcinal del cliente
      */
     @Override
-    public Optional<ClientePojo> getCliente(Long id) {
-        Optional<ClientePojo> clienteOptional = iClienteRepository.getById(id);
+    public Optional<ClienteDto> getCliente(Long id) {
+        Optional<ClienteDto> clienteOptional = iClienteRepository.getById(id);
         if (clienteOptional.isEmpty()){
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
@@ -68,8 +68,8 @@ public class ClienteServiceImpl implements IClienteUseCase {
      */
     @Transactional(readOnly = true)
     @Override
-    public Optional<ClientePojo> getByEmail(String email) {
-        Optional<ClientePojo> clienteOptional = iClienteRepository.getByEmail(email);
+    public Optional<ClienteDto> getByEmail(String email) {
+        Optional<ClienteDto> clienteOptional = iClienteRepository.getByEmail(email);
         if (clienteOptional.isEmpty()){
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
@@ -83,8 +83,8 @@ public class ClienteServiceImpl implements IClienteUseCase {
      * @return devuelve el opcinal del cliente
      */
     @Override
-    public Optional<ClientePojo> getByUsername(String username) {
-        Optional<ClientePojo> clienteOptional = iClienteRepository.getByUsername(username);
+    public Optional<ClienteDto> getByUsername(String username) {
+        Optional<ClienteDto> clienteOptional = iClienteRepository.getByUsername(username);
         if (clienteOptional.isEmpty()){
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
@@ -99,7 +99,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
      */
     @Transactional
     @Override
-    public ClienteResponsePojo save(ClientePojo newCliente) {
+    public ClienteResponseDto save(ClienteDto newCliente) {
         if (!newCliente.getEmail().matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
             throw new ErrorValidationExceptions(this.MESAGGE_EMAIL);
@@ -112,7 +112,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
         newCliente.setActive(1);
         newCliente.setRole(Roles.USER);
         iClienteRepository.save(newCliente);
-        return new ClienteResponsePojo(passwordGenerated);
+        return new ClienteResponseDto(passwordGenerated);
     }
 
     /**
@@ -123,7 +123,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
      */
     @Transactional
     @Override
-    public Optional<ClientePojo> update(ClientePojo cliente) {
+    public Optional<ClienteDto> update(ClienteDto cliente) {
         if (iClienteRepository.getById(cliente.getId()).isEmpty()) {
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }

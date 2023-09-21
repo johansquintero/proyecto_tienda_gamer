@@ -1,8 +1,8 @@
 package com.proyecto.tienda.controller;
 
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
-import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoRequestDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,8 +37,8 @@ public class ProductoContoller {
     }
 
     @GetMapping(path = "/name/{name}")
-    public ResponseEntity<List<ProductoResponseDto>> getByTitle(@PathVariable String name){
-        return ResponseEntity.ok(iProductoUseCase.getProductosByName(name));
+    public ResponseEntity<ProductoResponseDto> getByName(@PathVariable String name){
+        return ResponseEntity.of(iProductoUseCase.getProductoByName(name));
     }
 
     @GetMapping(path = "/{id}")

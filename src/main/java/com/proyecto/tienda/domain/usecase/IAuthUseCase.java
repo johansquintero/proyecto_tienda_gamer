@@ -1,9 +1,9 @@
 package com.proyecto.tienda.domain.usecase;
 
-import com.proyecto.tienda.domain.pojo.security.AuthClientePojo;
-import com.proyecto.tienda.domain.pojo.security.JwtResponsePojo;
+import com.proyecto.tienda.domain.dto.security.AuthClienteDto;
+import com.proyecto.tienda.domain.dto.security.JwtResponseDto;
 
 public interface IAuthUseCase {
-    JwtResponsePojo signIn(AuthClientePojo authClientePojo);
-    JwtResponsePojo signOut(String jwt);
+    JwtResponseDto signIn(AuthClienteDto authClienteDto);
+    JwtResponseDto signOut(String jwt);
 }

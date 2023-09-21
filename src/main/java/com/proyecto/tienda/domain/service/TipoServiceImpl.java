@@ -1,6 +1,6 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
+import com.proyecto.tienda.domain.dto.tipo.TipoDto;
 import com.proyecto.tienda.domain.repository.ITipoRepository;
 import com.proyecto.tienda.domain.usecase.ITipoUseCase;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
@@ -28,7 +28,7 @@ public class TipoServiceImpl implements ITipoUseCase {
      */
 
     @Override
-    public List<TipoPojo> getAll() {
+    public List<TipoDto> getAll() {
         return iTipoRepository.getAll();
     }
 
@@ -39,8 +39,8 @@ public class TipoServiceImpl implements ITipoUseCase {
      * @return devuelve un Optional del tipo
      */
     @Override
-    public Optional<TipoPojo> getTipo(Long id) {
-        Optional<TipoPojo> tipoOptional = iTipoRepository.getTipo(id);
+    public Optional<TipoDto> getTipo(Long id) {
+        Optional<TipoDto> tipoOptional = iTipoRepository.getTipo(id);
         if (tipoOptional.isEmpty()) {
             throw new ErrorValidationExceptions(this.NOT_EXISTS_MESSAGE);
         }
@@ -54,7 +54,7 @@ public class TipoServiceImpl implements ITipoUseCase {
      * @return retorna el tipo creado
      */
     @Override
-    public TipoPojo save(TipoPojo newTipo) {
+    public TipoDto save(TipoDto newTipo) {
         if (iTipoRepository.getByName(newTipo.getName()).isPresent()) {
             throw new ErrorValidationExceptions(this.EXISTS_MESSAGE);
         }
@@ -68,7 +68,7 @@ public class TipoServiceImpl implements ITipoUseCase {
      * @return retorna el tipo creado
      */
     @Override
-    public Optional<TipoPojo> update(TipoPojo tipo) {
+    public Optional<TipoDto> update(TipoDto tipo) {
         if (iTipoRepository.getTipo(tipo.getId()).isEmpty()) {
             throw new ErrorValidationExceptions(this.NOT_EXISTS_MESSAGE);
         }

@@ -1,8 +1,8 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
-import com.proyecto.tienda.domain.pojo.security.AuthClientePojo;
-import com.proyecto.tienda.domain.pojo.security.JwtResponsePojo;
+import com.proyecto.tienda.domain.dto.cliente.ClienteDto;
+import com.proyecto.tienda.domain.dto.security.AuthClienteDto;
+import com.proyecto.tienda.domain.dto.security.JwtResponseDto;
 import com.proyecto.tienda.domain.repository.IClienteRepository;
 import com.proyecto.tienda.domain.usecase.IAuthUseCase;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
@@ -36,20 +36,20 @@ public class AuthServiceImpl implements IAuthUseCase {
 
 
     /**
-     * @param authClientePojo
-     * @return JwtResponsePojo del token creado para el cliente
+     * @param authClienteDto
+     * @return JwtResponseDto del token creado para el cliente
      */
     @Override
-    public JwtResponsePojo signIn(AuthClientePojo authClientePojo) {
-        Optional<ClientePojo> cliente = iClienteRepository.getByUsername(authClientePojo.getUsername());
+    public JwtResponseDto signIn(AuthClienteDto authClienteDto) {
+        Optional<ClienteDto> cliente = iClienteRepository.getByUsername(authClienteDto.getUsername());
         if (cliente.isEmpty()){
             throw new ErrorValidationExceptions(this.NOT_EXISTS_MESSAGE);
         }
-        if (!passwordEncoder.matches(authClientePojo.getPassword(),cliente.get().getPassword())){
+        if (!passwordEncoder.matches(authClienteDto.getPassword(),cliente.get().getPassword())){
             throw new ErrorValidationExceptions(this.INCORRECT_PASSWORD_MESSAGE);
         }
         String token = jwtAuthenticationProvider.createToken(cliente.get());
-        return new JwtResponsePojo(token);
+        return new JwtResponseDto(token);
     }
 
     /**
@@ -57,8 +57,8 @@ public class AuthServiceImpl implements IAuthUseCase {
      * @return respuesta
      */
     @Override
-    public JwtResponsePojo signOut(String jwt) {
+    public JwtResponseDto signOut(String jwt) {
         String[] authElements = jwt.split(" ");//se separa el bearer del token
-        return new JwtResponsePojo(jwtAuthenticationProvider.deleteToken(authElements[1]));//el segundo elemento es el token
+        return new JwtResponseDto(jwtAuthenticationProvider.deleteToken(authElements[1]));//el segundo elemento es el token
     }
 }

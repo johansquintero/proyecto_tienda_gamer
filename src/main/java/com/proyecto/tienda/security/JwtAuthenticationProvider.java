@@ -3,7 +3,7 @@ package com.proyecto.tienda.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
+import com.proyecto.tienda.domain.dto.cliente.ClienteDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -32,29 +32,29 @@ public class JwtAuthenticationProvider {
     /**
      * Lista blanca de los tokens creados
      */
-    private HashMap<String, ClientePojo> listToken = new HashMap<>();
+    private HashMap<String, ClienteDto> listToken = new HashMap<>();
 
 
     /**
      * Crea un nuevo jwt en base al cliente recibido por parametro y lo agrega a la lista blanca
-     * @param clientePojo Cliente a utilizar en la creacion del jwt
+     * @param clienteDto Cliente a utilizar en la creacion del jwt
      * @return Jwt creado
      */
-    public String createToken(ClientePojo clientePojo){
+    public String createToken(ClienteDto clienteDto){
         Date now = new Date();
         Date validity = new Date(now.getTime()+36000000);
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         String tokenCreated = JWT.create()
-                .withClaim("id",clientePojo.getId())
-                .withClaim("username",clientePojo.getUsername())
-                .withClaim("email",clientePojo.getEmail())
-                .withClaim("telephone",clientePojo.getTelephone())
-                .withClaim("role",clientePojo.getRole())
-                .withClaim("address",clientePojo.getAddress())
+                .withClaim("id", clienteDto.getId())
+                .withClaim("username", clienteDto.getUsername())
+                .withClaim("email", clienteDto.getEmail())
+                .withClaim("telephone", clienteDto.getTelephone())
+                .withClaim("role", clienteDto.getRole())
+                .withClaim("address", clienteDto.getAddress())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .sign(algorithm);
-        this.listToken.put(tokenCreated,clientePojo);
+        this.listToken.put(tokenCreated, clienteDto);
         return tokenCreated;
     }
     /**
@@ -66,7 +66,7 @@ public class JwtAuthenticationProvider {
      */
     public Authentication validateToken(String token) throws AuthenticationException {
         JWT.require(Algorithm.HMAC256(this.secretKey)).build().verify(token);
-        ClientePojo exists = this.listToken.get(token);
+        ClienteDto exists = this.listToken.get(token);
         if (exists==null){
             throw new BadCredentialsException("Usuario no registrado");
         }

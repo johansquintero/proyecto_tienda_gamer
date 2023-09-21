@@ -1,8 +1,7 @@
-package com.proyecto.tienda.domain.pojo.security;
+package com.proyecto.tienda.domain.dto.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -10,6 +9,6 @@ import lombok.Setter;
  */
 @Getter@Setter
 @AllArgsConstructor
-public class JwtResponsePojo {
+public class JwtResponseDto {
     private String jwt;
 }

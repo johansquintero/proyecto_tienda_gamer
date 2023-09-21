@@ -1,6 +1,6 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
+import com.proyecto.tienda.domain.dto.marca.MarcaDto;
 import com.proyecto.tienda.domain.repository.IMarcaRepository;
 import com.proyecto.tienda.domain.usecase.IMarcaUseCase;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
@@ -33,7 +33,7 @@ public class MarcaServiceImpl implements IMarcaUseCase {
      * @return retorna una lista con todas la Marcas de los productos
      */
     @Override
-    public List<MarcaPojo> getAll() {
+    public List<MarcaDto> getAll() {
         return iMarcaRepository.getAll();
     }
 
@@ -41,11 +41,11 @@ public class MarcaServiceImpl implements IMarcaUseCase {
      * Devuelve una marca a partir de su ID
      *
      * @param id identificador de la marca
-     * @return devuelve el optional casteando a un pojo la entidad
+     * @return devuelve el optional casteando a un dto la entidad
      */
     @Override
-    public Optional<MarcaPojo> getMarca(Long id) {
-        Optional<MarcaPojo> marcaOptional = iMarcaRepository.getMarca(id);
+    public Optional<MarcaDto> getMarca(Long id) {
+        Optional<MarcaDto> marcaOptional = iMarcaRepository.getMarca(id);
         if (marcaOptional.isEmpty()) {
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
@@ -59,7 +59,7 @@ public class MarcaServiceImpl implements IMarcaUseCase {
      * @return retorna la marca creada
      */
     @Override
-    public MarcaPojo save(MarcaPojo newMarca) {
+    public MarcaDto save(MarcaDto newMarca) {
         if (iMarcaRepository.getMarcaByName(newMarca.getName()).isPresent()) {
             throw new ErrorValidationExceptions(this.MESAGGE_EXISTS);
         }
@@ -73,8 +73,8 @@ public class MarcaServiceImpl implements IMarcaUseCase {
      * @return retorna un optional que contendra la marca(si existe)
      */
     @Override
-    public Optional<MarcaPojo> update(MarcaPojo marca) {
-        Optional<MarcaPojo> optionalMarcaPojo = iMarcaRepository.getMarca(marca.getId());
+    public Optional<MarcaDto> update(MarcaDto marca) {
+        Optional<MarcaDto> optionalMarcaPojo = iMarcaRepository.getMarca(marca.getId());
         if (optionalMarcaPojo.isEmpty()) {
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }

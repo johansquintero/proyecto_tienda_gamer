@@ -1,7 +1,6 @@
 package com.proyecto.tienda.persistance.mapper.producto;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
-import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoResponseDto;
 import com.proyecto.tienda.persistance.entity.ProductoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

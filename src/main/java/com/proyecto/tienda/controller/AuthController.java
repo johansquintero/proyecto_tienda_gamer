@@ -1,10 +1,10 @@
 package com.proyecto.tienda.controller;
 
 
-import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
-import com.proyecto.tienda.domain.pojo.cliente.ClienteResponsePojo;
-import com.proyecto.tienda.domain.pojo.security.AuthClientePojo;
-import com.proyecto.tienda.domain.pojo.security.JwtResponsePojo;
+import com.proyecto.tienda.domain.dto.cliente.ClienteDto;
+import com.proyecto.tienda.domain.dto.cliente.ClienteResponseDto;
+import com.proyecto.tienda.domain.dto.security.AuthClienteDto;
+import com.proyecto.tienda.domain.dto.security.JwtResponseDto;
 import com.proyecto.tienda.domain.usecase.IAuthUseCase;
 import com.proyecto.tienda.domain.usecase.IClienteUseCase;
 import lombok.RequiredArgsConstructor;
@@ -21,16 +21,16 @@ public class AuthController {
     private final IClienteUseCase iClienteUseCase;
 
     @PostMapping(path = "/register")
-    public ResponseEntity<ClienteResponsePojo> register(@RequestBody ClientePojo newCliente){
+    public ResponseEntity<ClienteResponseDto> register(@RequestBody ClienteDto newCliente){
         return ResponseEntity.status(HttpStatus.CREATED).body(iClienteUseCase.save(newCliente));
     }
     @PostMapping(path = "/sign-in")
-    public ResponseEntity<JwtResponsePojo> signIn(@RequestBody AuthClientePojo authClientePojo){
-        return ResponseEntity.ok(iAuthUseCase.signIn(authClientePojo));
+    public ResponseEntity<JwtResponseDto> signIn(@RequestBody AuthClienteDto authClienteDto){
+        return ResponseEntity.ok(iAuthUseCase.signIn(authClienteDto));
     }
 
     @PostMapping(path = "/sign-out")
-    public ResponseEntity<JwtResponsePojo> signOut(@RequestHeader(name = HttpHeaders.AUTHORIZATION) String jwt){
+    public ResponseEntity<JwtResponseDto> signOut(@RequestHeader(name = HttpHeaders.AUTHORIZATION) String jwt){
         return ResponseEntity.ok(iAuthUseCase.signOut(jwt));
     }
 }

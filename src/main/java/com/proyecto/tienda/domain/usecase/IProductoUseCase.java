@@ -1,7 +1,7 @@
 package com.proyecto.tienda.domain.usecase;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
-import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoRequestDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,7 +15,7 @@ public interface IProductoUseCase {
 
     Optional<ProductoResponseDto> getProducto(Long id);
 
-    List<ProductoResponseDto> getProductosByName(String title);
+    Optional<ProductoResponseDto> getProductoByName(String name);
 
     List<ProductoResponseDto> getProductoByTipo(Long typeId);
 

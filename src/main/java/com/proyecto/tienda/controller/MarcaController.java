@@ -1,6 +1,6 @@
 package com.proyecto.tienda.controller;
 
-import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
+import com.proyecto.tienda.domain.dto.marca.MarcaDto;
 import com.proyecto.tienda.domain.usecase.IMarcaUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class MarcaController {
      * Endpoint para retornar el cuerpo de la lista de todas las marcas
      */
     @GetMapping
-    public ResponseEntity<List<MarcaPojo>> getAll(){
+    public ResponseEntity<List<MarcaDto>> getAll(){
         return ResponseEntity.ok(this.iMarcaUseCase.getAll());
         //return ResponseEntity.status(HttpStatus.OK).body(this.iMarcaUseCase.getAll());
         //return new ResponseEntity<>(this.iMarcaUseCase.getAll(),HttpStatus.OK);
@@ -37,7 +37,7 @@ public class MarcaController {
      * @return Cuerpo que contendra la marca encontrada, se usa el operador of para evaluar en el opcional si se encontro la marca
      */
     @GetMapping(path = "/{id}")
-    public ResponseEntity<MarcaPojo> getMarca(@PathVariable(name = "id") Long id){
+    public ResponseEntity<MarcaDto> getMarca(@PathVariable(name = "id") Long id){
          return ResponseEntity.of(this.iMarcaUseCase.getMarca(id));
     }
 
@@ -47,7 +47,7 @@ public class MarcaController {
      * @return marca creada en la base de datos
      */
     @PostMapping
-    public ResponseEntity<MarcaPojo> save(@RequestBody MarcaPojo marca){
+    public ResponseEntity<MarcaDto> save(@RequestBody MarcaDto marca){
         return ResponseEntity.ok(iMarcaUseCase.save(marca));
     }
 
@@ -57,7 +57,7 @@ public class MarcaController {
      * @return marca actualizada en la base de datos
      */
     @PutMapping
-    public ResponseEntity<MarcaPojo> update(@RequestBody MarcaPojo marca){
+    public ResponseEntity<MarcaDto> update(@RequestBody MarcaDto marca){
         return ResponseEntity.of(iMarcaUseCase.update(marca));
     }
 

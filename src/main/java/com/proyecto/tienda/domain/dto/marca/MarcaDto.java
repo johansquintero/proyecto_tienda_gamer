@@ -1,4 +1,4 @@
-package com.proyecto.tienda.domain.pojo.marca;
+package com.proyecto.tienda.domain.dto.marca;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 
 @Getter@Setter
-public class MarcaPojo {
+public class MarcaDto {
     /**
      * id de la marca
      */

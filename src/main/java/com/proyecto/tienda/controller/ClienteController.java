@@ -1,7 +1,6 @@
 package com.proyecto.tienda.controller;
 
-import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
-import com.proyecto.tienda.domain.pojo.cliente.ClienteResponsePojo;
+import com.proyecto.tienda.domain.dto.cliente.ClienteDto;
 import com.proyecto.tienda.domain.usecase.IClienteUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,7 @@ public class ClienteController {
      * @return retorna una lista con todos los clientes
      */
     @GetMapping
-    public ResponseEntity<List<ClientePojo>> getAll() {
+    public ResponseEntity<List<ClienteDto>> getAll() {
         return ResponseEntity.ok(iClienteUseCase.getAll());
     }
 
@@ -38,7 +37,7 @@ public class ClienteController {
      * @return devuelve el opcinal del cliente
      */
     @GetMapping(path = "/{id}")
-    public ResponseEntity<ClientePojo> getCliente(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<ClienteDto> getCliente(@PathVariable(name = "id") Long id) {
         return ResponseEntity.of(iClienteUseCase.getCliente(id));
     }
 
@@ -49,7 +48,7 @@ public class ClienteController {
      * @return devuelve el opcinal del cliente
      */
     @GetMapping(path = "/email/{email}")
-    public ResponseEntity<ClientePojo> getClienteByEmail(@PathVariable(name = "email") String email) {
+    public ResponseEntity<ClienteDto> getClienteByEmail(@PathVariable(name = "email") String email) {
         return ResponseEntity.of(iClienteUseCase.getByEmail(email));
     }
 
@@ -60,7 +59,7 @@ public class ClienteController {
      * @return retorna un opcional del cliente actualizado
      */
     @PutMapping
-    public ResponseEntity<ClientePojo> update(@RequestBody ClientePojo cliente) {
+    public ResponseEntity<ClienteDto> update(@RequestBody ClienteDto cliente) {
         return ResponseEntity.of(iClienteUseCase.update(cliente));
     }
 

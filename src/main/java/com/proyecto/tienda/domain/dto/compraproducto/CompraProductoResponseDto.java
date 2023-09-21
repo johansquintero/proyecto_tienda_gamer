@@ -1,4 +1,4 @@
-package com.proyecto.tienda.domain.pojo.compraproducto;
+package com.proyecto.tienda.domain.dto.compraproducto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class CompraProductoResponsePojo {
+public class CompraProductoResponseDto {
     /**
      *Nombre del producto a referenciar
      */

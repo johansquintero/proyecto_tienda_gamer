@@ -1,9 +1,8 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.compra.CompraIdResponsePojo;
-import com.proyecto.tienda.domain.pojo.compra.CompraRequestPojo;
-import com.proyecto.tienda.domain.pojo.compra.CompraResponsePojo;
-import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
+import com.proyecto.tienda.domain.dto.compra.CompraIdResponseDto;
+import com.proyecto.tienda.domain.dto.compra.CompraRequestDto;
+import com.proyecto.tienda.domain.dto.compra.CompraResponseDto;
 import com.proyecto.tienda.domain.repository.ICompraRepository;
 import com.proyecto.tienda.persistance.crud.ICompraCrudRepository;
 import com.proyecto.tienda.persistance.crud.IProductoCrudRepository;
@@ -26,28 +25,30 @@ public class CompraRepositoryImpl implements ICompraRepository {
     private final IProductoCrudRepository iProductoCrudRepository;
 
     @Override
-    public List<CompraResponsePojo> getAll() {
-        return iCompraResponseMapper.toComprasResponsePojo(iCompraCrudRepository.findAll());
+    public List<CompraResponseDto> getAll() {
+        return iCompraResponseMapper.toComprasResponseDto(iCompraCrudRepository.findAll());
     }
 
     @Override
-    public List<CompraResponsePojo> getAllByCustomer(Long customerId) {
-        return iCompraResponseMapper.toComprasResponsePojo(iCompraCrudRepository.findAllByCustomerId(customerId));
+    public List<CompraResponseDto> getAllByCustomer(Long customerId) {
+        return iCompraResponseMapper.toComprasResponseDto(iCompraCrudRepository.findAllByCustomerId(customerId));
     }
 
     @Override
-    public Optional<CompraResponsePojo> getCompra(Long id) {
-        return iCompraCrudRepository.findById(id).map(iCompraResponseMapper::toCompraResponsePojo);
+    public Optional<CompraResponseDto> getCompra(Long id) {
+        return iCompraCrudRepository.findById(id).map(iCompraResponseMapper::toCompraResponseDto);
     }
 
     @Override
-    public CompraIdResponsePojo save(CompraRequestPojo compraRequestPojo) {
-        CompraEntity compraEntity = iCompraRequestMapper.toCompraEntity(compraRequestPojo);
+    public CompraIdResponseDto save(CompraRequestDto compraRequestDto) {
+        CompraEntity compraEntity = iCompraRequestMapper.toCompraEntity(compraRequestDto);
+
         compraEntity.getCompraProductos().forEach(compraProductoEntity -> compraProductoEntity.setCompraEntity(compraEntity));
+
         CompraEntity compraSave = iCompraCrudRepository.save(compraEntity);
 
         //logica para restar la cantidad comprada
-        compraRequestPojo.getCompraProductos().forEach(compraProductoRequest -> {
+        compraRequestDto.getCompraProductos().forEach(compraProductoRequest -> {
             //obtienemos el producto actual
             ProductoEntity productoActual = iProductoCrudRepository.findById(compraProductoRequest.getProductId()).get();
             //le resta la cantidad a comprar al producto actual
@@ -56,7 +57,7 @@ public class CompraRepositoryImpl implements ICompraRepository {
             iProductoCrudRepository.save(productoActual);
         });
 
-        return new CompraIdResponsePojo(compraSave.getId());
+        return new CompraIdResponseDto(compraSave.getId());
     }
 
 }

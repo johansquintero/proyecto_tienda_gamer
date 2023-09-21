@@ -1,18 +1,18 @@
 package com.proyecto.tienda.domain.usecase;
 
-import com.proyecto.tienda.domain.pojo.compra.CompraIdResponsePojo;
-import com.proyecto.tienda.domain.pojo.compra.CompraRequestPojo;
-import com.proyecto.tienda.domain.pojo.compra.CompraResponsePojo;
+import com.proyecto.tienda.domain.dto.compra.CompraIdResponseDto;
+import com.proyecto.tienda.domain.dto.compra.CompraRequestDto;
+import com.proyecto.tienda.domain.dto.compra.CompraResponseDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ICompraUseCase {
-    List<CompraResponsePojo> getAll();
+    List<CompraResponseDto> getAll();
 
-    List<CompraResponsePojo> getAllByCustomer(Long customerId);
+    List<CompraResponseDto> getAllByCustomer(Long customerId);
 
-    Optional<CompraResponsePojo> getCompra(Long id);
+    Optional<CompraResponseDto> getCompra(Long id);
 
-    CompraIdResponsePojo save(CompraRequestPojo compraRequestPojo);
+    CompraIdResponseDto save(CompraRequestDto compraRequestDto);
 }

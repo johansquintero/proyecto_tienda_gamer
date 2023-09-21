@@ -1,6 +1,6 @@
 package com.proyecto.tienda.persistance.mapper.compra;
 
-import com.proyecto.tienda.domain.pojo.compra.CompraResponsePojo;
+import com.proyecto.tienda.domain.dto.compra.CompraResponseDto;
 import com.proyecto.tienda.persistance.entity.CompraEntity;
 import com.proyecto.tienda.persistance.mapper.compraProducto.ICompraProductoResponseMapper;
 import org.mapstruct.Mapper;
@@ -15,9 +15,9 @@ import java.util.List;
 public interface ICompraResponseMapper {
 
     @Mapping(target = "clienteEntity", ignore = true)
-    CompraEntity toCompraEntity(CompraResponsePojo compraResponsePojo);
+    CompraEntity toCompraEntity(CompraResponseDto compraResponseDto);
 
-    CompraResponsePojo toCompraResponsePojo(CompraEntity compraEntity);
+    CompraResponseDto toCompraResponseDto(CompraEntity compraEntity);
 
-    List<CompraResponsePojo> toComprasResponsePojo(List<CompraEntity> comprasEntitie);
+    List<CompraResponseDto> toComprasResponseDto(List<CompraEntity> comprasEntitie);
 }

@@ -1,4 +1,4 @@
-package com.proyecto.tienda.domain.pojo.cliente;
+package com.proyecto.tienda.domain.dto.cliente;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,6 @@ import lombok.Setter;
  */
 @Getter@Setter
 @AllArgsConstructor
-public class ClienteResponsePojo {
+public class ClienteResponseDto {
     private String password;
 }

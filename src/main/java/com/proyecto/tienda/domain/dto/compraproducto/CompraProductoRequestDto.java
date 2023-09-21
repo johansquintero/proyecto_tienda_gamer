@@ -1,4 +1,4 @@
-package com.proyecto.tienda.domain.pojo.compraproducto;
+package com.proyecto.tienda.domain.dto.compraproducto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import lombok.Setter;
  * guardado de detalle de una compra de un producto
  */
 @Getter@Setter
-public class CompraProductoRequestPojo {
+public class CompraProductoRequestDto {
     /**
      * Id de la compra
      */

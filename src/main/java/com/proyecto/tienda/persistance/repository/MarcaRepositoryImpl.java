@@ -1,6 +1,6 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
+import com.proyecto.tienda.domain.dto.marca.MarcaDto;
 import com.proyecto.tienda.domain.repository.IMarcaRepository;
 import com.proyecto.tienda.persistance.entity.MarcaEntity;
 import com.proyecto.tienda.persistance.mapper.marca.IMarcaMapper;
@@ -32,18 +32,18 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
      * @return retorna una lista con todas la Marcas de los productos
      */
     @Override
-    public List<MarcaPojo> getAll() {
-        return iMarcaMapper.toMarcaPojos(iMarcaCrudRepository.findAll());
+    public List<MarcaDto> getAll() {
+        return iMarcaMapper.toMarcasDto(iMarcaCrudRepository.findAll());
     }
 
     /**
      * Devuelve una marca a partir de su ID
      * @param id identificador de la marca
-     * @return devuelve el optional casteando a un pojo la entidad
+     * @return devuelve el optional casteando a un dto la entidad
      */
     @Override
-    public Optional<MarcaPojo> getMarca(Long id) {
-        return iMarcaCrudRepository.findById(id).map(iMarcaMapper::toMarcaPojo);//map corto
+    public Optional<MarcaDto> getMarca(Long id) {
+        return iMarcaCrudRepository.findById(id).map(iMarcaMapper::toMarcaDto);//map corto
     }
 
     /**
@@ -53,8 +53,8 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
      * @return devuelve un Optional de la marca
      */
     @Override
-    public Optional<MarcaPojo> getMarcaByName(String name) {
-        return iMarcaCrudRepository.findByName(name).map(iMarcaMapper::toMarcaPojo);
+    public Optional<MarcaDto> getMarcaByName(String name) {
+        return iMarcaCrudRepository.findByName(name).map(iMarcaMapper::toMarcaDto);
     }
 
     /**
@@ -63,9 +63,9 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
      * @return retorna la marca creada
      */
     @Override
-    public MarcaPojo save(MarcaPojo newMarca) {
+    public MarcaDto save(MarcaDto newMarca) {
         MarcaEntity marcaEntity = iMarcaMapper.toMarcaEntity(newMarca);
-        return iMarcaMapper.toMarcaPojo(iMarcaCrudRepository.save(marcaEntity));
+        return iMarcaMapper.toMarcaDto(iMarcaCrudRepository.save(marcaEntity));
     }
 
     /**
@@ -81,6 +81,7 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
         if (marcaEntityOptional.isPresent()){
             MarcaEntity marcaEntity= marcaEntityOptional.get();
             if (!marcaEntity.getTiposEntities().isEmpty()){
+                //elimina la marca en cada uno de los tipos relacionados a esta
                 marcaEntity.getTiposEntities().forEach(tipoEntity -> tipoEntity.getMarcasEntities().remove(marcaEntity));
             }
             iMarcaCrudRepository.delete(marcaEntity);

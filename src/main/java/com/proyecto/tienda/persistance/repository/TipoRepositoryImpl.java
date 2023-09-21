@@ -1,6 +1,6 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
+import com.proyecto.tienda.domain.dto.tipo.TipoDto;
 import com.proyecto.tienda.domain.repository.ITipoRepository;
 import com.proyecto.tienda.persistance.crud.ITipoCrudRepository;
 import com.proyecto.tienda.persistance.entity.TipoEntity;
@@ -33,8 +33,8 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @return retorna una lista con todas las tipos de producto
      */
     @Override
-    public List<TipoPojo> getAll() {
-        return iTipoMapper.toTipoPojos(iTipoCrudRepository.findAll());
+    public List<TipoDto> getAll() {
+        return iTipoMapper.toTiposDto(iTipoCrudRepository.findAll());
     }
 
     /**
@@ -44,8 +44,8 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @return devuelve un Optional del tipo
      */
     @Override
-    public Optional<TipoPojo> getTipo(Long id) {
-        return iTipoCrudRepository.findById(id).map(iTipoMapper::toTipoPojo);
+    public Optional<TipoDto> getTipo(Long id) {
+        return iTipoCrudRepository.findById(id).map(iTipoMapper::toTipoDto);
     }
 
     /**
@@ -55,8 +55,8 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @return Optional del tipo encontrado
      */
     @Override
-    public Optional<TipoPojo> getByName(String name) {
-        return iTipoCrudRepository.findByName(name).map(iTipoMapper::toTipoPojo);
+    public Optional<TipoDto> getByName(String name) {
+        return iTipoCrudRepository.findByName(name).map(iTipoMapper::toTipoDto);
     }
 
     /**
@@ -66,8 +66,8 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @return retorna el tipo creado
      */
     @Override
-    public TipoPojo save(TipoPojo newTipo) {
-        return this.iTipoMapper.toTipoPojo(this.iTipoCrudRepository.save(this.iTipoMapper.toTipoEntity(newTipo)));
+    public TipoDto save(TipoDto newTipo) {
+        return this.iTipoMapper.toTipoDto(this.iTipoCrudRepository.save(this.iTipoMapper.toTipoEntity(newTipo)));
     }
 
     /**

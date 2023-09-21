@@ -1,6 +1,6 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
+import com.proyecto.tienda.domain.dto.cliente.ClienteDto;
 import com.proyecto.tienda.domain.repository.IClienteRepository;
 import com.proyecto.tienda.persistance.mapper.IClienteMapper;
 import com.proyecto.tienda.persistance.crud.IClienteCrudRepository;
@@ -27,20 +27,20 @@ public class ClienteRepositoryImpl implements IClienteRepository {
     private final IClienteMapper iClienteMapper;
 
     @Override
-    public List<ClientePojo> getAll() {
-        return iClienteMapper.toClientesPojo(iClienteCrudRepository.findAll());
+    public List<ClienteDto> getAll() {
+        return iClienteMapper.toClientesDto(iClienteCrudRepository.findAll());
     }
 
     @Override
-    public Optional<ClientePojo> getById(Long id) {
+    public Optional<ClienteDto> getById(Long id) {
         return iClienteCrudRepository.findById(id)
-                .map(iClienteMapper::toClientePojo);
+                .map(iClienteMapper::toClienteDto);
     }
 
     @Override
-    public Optional<ClientePojo> getByEmail(String email) {
+    public Optional<ClienteDto> getByEmail(String email) {
         return iClienteCrudRepository.findByEmail(email)
-                .map(iClienteMapper::toClientePojo);
+                .map(iClienteMapper::toClienteDto);
     }
 
     /**
@@ -49,14 +49,14 @@ public class ClienteRepositoryImpl implements IClienteRepository {
      * @param username@return devuelve el opcinal del cliente
      */
     @Override
-    public Optional<ClientePojo> getByUsername(String username) {
+    public Optional<ClienteDto> getByUsername(String username) {
         return iClienteCrudRepository.findByUsername(username)
-                .map(iClienteMapper::toClientePojo);
+                .map(iClienteMapper::toClienteDto);
     }
 
     @Override
-    public ClientePojo save(ClientePojo newCliente) {
-        return iClienteMapper.toClientePojo(iClienteCrudRepository.save(iClienteMapper.toClienteEntity(newCliente)));
+    public ClienteDto save(ClienteDto newCliente) {
+        return iClienteMapper.toClienteDto(iClienteCrudRepository.save(iClienteMapper.toClienteEntity(newCliente)));
     }
 
     @Override

@@ -17,6 +17,7 @@ public class CompraEntity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     /**
@@ -47,7 +48,7 @@ public class CompraEntity {
     /**
      * detalle de la compra que se obtiene al relacionar las compras con los productos
      */
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "compraEntity", cascade = {CascadeType.REFRESH,CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "compraEntity", cascade = {CascadeType.ALL})
     private Set<CompraProductoEntity> compraProductos;
 
     @ManyToOne

@@ -1,8 +1,7 @@
 package com.proyecto.tienda.persistance.mapper.marca;
 
-import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
+import com.proyecto.tienda.domain.dto.marca.MarcaDto;
 import com.proyecto.tienda.persistance.entity.MarcaEntity;
-import com.proyecto.tienda.persistance.mapper.tipo.ITipoMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,26 +15,26 @@ public interface IMarcaMapper{
 
     /**
      * Convierte un Pojo a una entidad
-     * @param marcaPojo pojo a convertir
+     * @param marcaDto dto a convertir
      * @return Entidad convertida
      */
     @Mapping(target = "tiposEntities",ignore = true)
     @Mapping(target = "productos",ignore = true)
-    MarcaEntity toMarcaEntity(MarcaPojo marcaPojo);
+    MarcaEntity toMarcaEntity(MarcaDto marcaDto);
 
     /**
-     * Convierte una entidad marca a marca pojo
+     * Convierte una entidad marca a marca dto
      * @param marcaEntity Entidad a convertir
      * @return Pojo mapeado
      */
 
-    MarcaPojo toMarcaPojo(MarcaEntity marcaEntity);
+    MarcaDto toMarcaDto(MarcaEntity marcaEntity);
 
     /**
      * Convierte una lista de marcas de entidades a Pojos
      * @param marcasEntityList Lista de entidades de marcas
      * @return Lista de pojos mapped
      */
-    List<MarcaPojo> toMarcaPojos(List<MarcaEntity> marcasEntityList);
+    List<MarcaDto> toMarcasDto(List<MarcaEntity> marcasEntityList);
 }
 

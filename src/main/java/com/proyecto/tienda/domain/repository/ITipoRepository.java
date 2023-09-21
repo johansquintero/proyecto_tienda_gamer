@@ -1,6 +1,6 @@
 package com.proyecto.tienda.domain.repository;
 
-import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
+import com.proyecto.tienda.domain.dto.tipo.TipoDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,14 +12,14 @@ public interface ITipoRepository {
     /**
      * @return retorna una lista con todas las tipos de producto
      */
-    List<TipoPojo> getAll();
+    List<TipoDto> getAll();
 
     /**
      * Devuelve un tipo dado su ID
      * @param id identificador del tipo
      * @return devuelve un Optional del tipo
      */
-    Optional<TipoPojo> getTipo(Long id);
+    Optional<TipoDto> getTipo(Long id);
 
 
     /**
@@ -28,14 +28,14 @@ public interface ITipoRepository {
      * @return Optional del tipo encontrado
      */
 
-    Optional<TipoPojo> getByName(String name);
+    Optional<TipoDto> getByName(String name);
 
     /**
      *Guarda un nuevo tipo de producto
      * @param newTipo tipo a insertar en la base de datos
      * @return retorna el tipo creado
      */
-    TipoPojo save(TipoPojo newTipo);
+    TipoDto save(TipoDto newTipo);
 
     /**
      * Elimina un tipo de base de datos

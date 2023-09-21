@@ -1,7 +1,7 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
-import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoRequestDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.repository.IProductoRepository;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
@@ -36,15 +36,19 @@ public class ProductoServiceImpl implements IProductoUseCase {
     @Override
     public Optional<ProductoResponseDto> getProducto(Long id) {
         Optional<ProductoResponseDto> productoOptional = iProductoRepository.getProducto(id);
-        if (productoOptional.isEmpty()){
+        if (productoOptional.isEmpty()) {
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
-        return iProductoRepository.getProducto(id);
+        return productoOptional;
     }
 
     @Override
-    public List<ProductoResponseDto> getProductosByName(String title) {
-        return iProductoRepository.getProductosByName(title);
+    public Optional<ProductoResponseDto> getProductoByName(String name) {
+        Optional<ProductoResponseDto> productoOptional = iProductoRepository.getProductoByName(name);
+        if (productoOptional.isEmpty()) {
+            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+        }
+        return productoOptional;
     }
 
     @Override
@@ -64,7 +68,7 @@ public class ProductoServiceImpl implements IProductoUseCase {
 
     @Override
     public Optional<ProductoResponseDto> update(ProductoRequestDto producto) {
-        if (iProductoRepository.getProducto(producto.getId()).isEmpty()){
+        if (iProductoRepository.getProducto(producto.getId()).isEmpty()) {
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
         return Optional.of(iProductoRepository.save(producto));
@@ -72,10 +76,10 @@ public class ProductoServiceImpl implements IProductoUseCase {
 
     @Override
     public boolean delete(Long id) {
-        if (iProductoRepository.getProducto(id).isEmpty()){
+        if (iProductoRepository.getProducto(id).isEmpty()) {
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
         iProductoRepository.delete(id);
-        return  true;
+        return true;
     }
 }

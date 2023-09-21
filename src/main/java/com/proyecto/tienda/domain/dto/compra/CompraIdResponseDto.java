@@ -1,4 +1,4 @@
-package com.proyecto.tienda.domain.pojo.compra;
+package com.proyecto.tienda.domain.dto.compra;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CompraIdResponsePojo {
+public class CompraIdResponseDto {
     private Long id;
 }

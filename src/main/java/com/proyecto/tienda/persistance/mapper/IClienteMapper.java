@@ -1,6 +1,6 @@
 package com.proyecto.tienda.persistance.mapper;
 
-import com.proyecto.tienda.domain.pojo.cliente.ClientePojo;
+import com.proyecto.tienda.domain.dto.cliente.ClienteDto;
 import com.proyecto.tienda.persistance.entity.ClienteEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,21 +11,21 @@ import java.util.List;
 public interface IClienteMapper {
 
     /**
-     * Convierte una entidad cliente a cliente pojo
+     * Convierte una entidad cliente a cliente dto
      *
      * @param clienteEntity Entidad a convertir
      * @return Pojo mapeado
      */
-    ClientePojo toClientePojo(ClienteEntity clienteEntity);
+    ClienteDto toClienteDto(ClienteEntity clienteEntity);
 
     /**
-     * Convierte un pojo cliente a cliente entidad
+     * Convierte un dto cliente a cliente entidad
      *
-     * @param clientePojo pojo a convertir
+     * @param clienteDto dto a convertir
      * @return Entidad convertida
      */
     @Mapping(target = "compras", ignore = true)
-    ClienteEntity toClienteEntity(ClientePojo clientePojo);
+    ClienteEntity toClienteEntity(ClienteDto clienteDto);
 
 
     /**
@@ -34,5 +34,5 @@ public interface IClienteMapper {
      * @param clienteEntities Lista de entidades de clientes
      * @return Lista de pojos mapeada
      */
-    List<ClientePojo> toClientesPojo(List<ClienteEntity> clienteEntities);
+    List<ClienteDto> toClientesDto(List<ClienteEntity> clienteEntities);
 }

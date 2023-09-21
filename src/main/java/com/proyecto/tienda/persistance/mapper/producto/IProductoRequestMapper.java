@@ -1,11 +1,9 @@
 package com.proyecto.tienda.persistance.mapper.producto;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoRequestDto;
 import com.proyecto.tienda.persistance.entity.ProductoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface IProductoRequestMapper {

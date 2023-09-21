@@ -1,6 +1,6 @@
 package com.proyecto.tienda.domain.repository;
 
-import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
+import com.proyecto.tienda.domain.dto.marca.MarcaDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,28 +12,28 @@ public interface IMarcaRepository {
     /**
      * @return retorna una lista con todas la Marcas de los productos
      */
-    List<MarcaPojo> getAll();
+    List<MarcaDto> getAll();
 
     /**
      * Devuelve una marca dado su ID
      * @param id identificador de la marca
      * @return devuelve un Optional de la marca
      */
-    Optional<MarcaPojo> getMarca(Long id);
+    Optional<MarcaDto> getMarca(Long id);
 
     /**
      * Devuelve una marca dado su nombre
      * @param name nombre de la marca
      * @return devuelve un Optional de la marca
      */
-    Optional<MarcaPojo> getMarcaByName(String name);
+    Optional<MarcaDto> getMarcaByName(String name);
 
     /**
      *Guarda una nueva marca de producto
      * @param newMarca marca a insertar en la base de datos
      * @return retorna la marca creada
      */
-    MarcaPojo save(MarcaPojo newMarca);
+    MarcaDto save(MarcaDto newMarca);
 
     /**
      * Elimina una marca de base de datos

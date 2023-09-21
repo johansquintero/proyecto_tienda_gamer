@@ -1,6 +1,6 @@
-package com.proyecto.tienda.domain.pojo.tipo;
+package com.proyecto.tienda.domain.dto.tipo;
 
-import com.proyecto.tienda.domain.pojo.marca.MarcaPojo;
+import com.proyecto.tienda.domain.dto.marca.MarcaDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class TipoPojo {
+public class TipoDto {
     /**
      * identificador del tipo
      */
@@ -24,5 +24,5 @@ public class TipoPojo {
     /**
      * Marcas que mapean la relacion entre un tipo y una marca con sus atributos
      */
-    private List<MarcaPojo> marcas;
+    private List<MarcaDto> marcas;
 }

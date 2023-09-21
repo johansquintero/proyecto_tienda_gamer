@@ -1,10 +1,8 @@
 package com.proyecto.tienda.domain.service;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
-import com.proyecto.tienda.domain.pojo.compra.CompraIdResponsePojo;
-import com.proyecto.tienda.domain.pojo.compra.CompraRequestPojo;
-import com.proyecto.tienda.domain.pojo.compra.CompraResponsePojo;
-import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
+import com.proyecto.tienda.domain.dto.compra.CompraIdResponseDto;
+import com.proyecto.tienda.domain.dto.compra.CompraRequestDto;
+import com.proyecto.tienda.domain.dto.compra.CompraResponseDto;
 import com.proyecto.tienda.domain.repository.ICompraRepository;
 import com.proyecto.tienda.domain.usecase.ICompraUseCase;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
@@ -25,18 +23,18 @@ public class CompraServiceImpl implements ICompraUseCase {
     final String MESAGGE_NOT_EXISTS = "La compra no se encuentra registrada en la base de datos";
 
     @Override
-    public List<CompraResponsePojo> getAll() {
+    public List<CompraResponseDto> getAll() {
         return iCompraRepository.getAll();
     }
 
     @Override
-    public List<CompraResponsePojo> getAllByCustomer(Long customerId) {
+    public List<CompraResponseDto> getAllByCustomer(Long customerId) {
         return iCompraRepository.getAllByCustomer(customerId);
     }
 
     @Override
-    public Optional<CompraResponsePojo> getCompra(Long id) {
-        Optional<CompraResponsePojo> compraResponseOptional = iCompraRepository.getCompra(id);
+    public Optional<CompraResponseDto> getCompra(Long id) {
+        Optional<CompraResponseDto> compraResponseOptional = iCompraRepository.getCompra(id);
         if (compraResponseOptional.isEmpty()){
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
@@ -44,8 +42,8 @@ public class CompraServiceImpl implements ICompraUseCase {
     }
 
     @Override
-    public CompraIdResponsePojo save(CompraRequestPojo compraRequestPojo) {
-        CompraIdResponsePojo responsePojo = iCompraRepository.save(compraRequestPojo);
-        return responsePojo;
+    public CompraIdResponseDto save(CompraRequestDto compraRequestDto) {
+        CompraIdResponseDto responseDto = iCompraRepository.save(compraRequestDto);
+        return responseDto;
     }
 }

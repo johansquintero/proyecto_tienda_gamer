@@ -1,6 +1,6 @@
 package com.proyecto.tienda.controller;
 
-import com.proyecto.tienda.domain.pojo.tipo.TipoPojo;
+import com.proyecto.tienda.domain.dto.tipo.TipoDto;
 import com.proyecto.tienda.domain.usecase.ITipoUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,22 +19,22 @@ public class TipoController {
     private final ITipoUseCase iTipoUseCase;
 
     @GetMapping
-    ResponseEntity<List<TipoPojo>> getAll() {
+    ResponseEntity<List<TipoDto>> getAll() {
         return ResponseEntity.ok(iTipoUseCase.getAll());
     }
 
     @GetMapping(path = "/{id}")
-    ResponseEntity<TipoPojo> getTipo(@PathVariable Long id) {
+    ResponseEntity<TipoDto> getTipo(@PathVariable Long id) {
         return ResponseEntity.of(iTipoUseCase.getTipo(id));
     }
 
     @PostMapping
-    ResponseEntity<TipoPojo> save(@RequestBody TipoPojo newTipo) {
+    ResponseEntity<TipoDto> save(@RequestBody TipoDto newTipo) {
         return ResponseEntity.ok(iTipoUseCase.save(newTipo));
     }
 
     @PutMapping
-    ResponseEntity<TipoPojo> update(@RequestBody TipoPojo tipo) {
+    ResponseEntity<TipoDto> update(@RequestBody TipoDto tipo) {
         return ResponseEntity.of(iTipoUseCase.update(tipo));
     }
 

@@ -1,7 +1,7 @@
 package com.proyecto.tienda.persistance.repository;
 
-import com.proyecto.tienda.domain.pojo.producto.ProductoRequestDto;
-import com.proyecto.tienda.domain.pojo.producto.ProductoResponseDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoRequestDto;
+import com.proyecto.tienda.domain.dto.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.repository.IProductoRepository;
 import com.proyecto.tienda.persistance.crud.IProductoCrudRepository;
 import com.proyecto.tienda.persistance.mapper.producto.IProductoRequestMapper;
@@ -59,8 +59,8 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @return Optional del producto
      */
     @Override
-    public List<ProductoResponseDto> getProductosByName(String name) {
-        return iProductoResponseMapper.toProductosResponseDto(iProductoCrudRepository.findAllByName(name));
+    public Optional<ProductoResponseDto> getProductoByName(String name) {
+        return this.iProductoCrudRepository.findByName(name).map(this.iProductoResponseMapper::toProductoResponseDto);
     }
 
     /**

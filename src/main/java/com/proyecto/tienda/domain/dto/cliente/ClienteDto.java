@@ -1,10 +1,10 @@
-package com.proyecto.tienda.domain.pojo.cliente;
+package com.proyecto.tienda.domain.dto.cliente;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter@Setter
-public class ClientePojo {
+public class ClienteDto {
     /**
      * Identificador del cliente
      */
@@ -47,7 +47,7 @@ public class ClientePojo {
 
     @Override
     public String toString() {
-        return "ClientePojo{" +
+        return "ClienteDto{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
