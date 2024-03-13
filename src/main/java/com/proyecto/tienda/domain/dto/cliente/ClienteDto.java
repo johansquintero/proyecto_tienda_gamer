@@ -3,7 +3,8 @@ package com.proyecto.tienda.domain.dto.cliente;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter@Setter
+@Getter
+@Setter
 public class ClienteDto {
     /**
      * Identificador del cliente

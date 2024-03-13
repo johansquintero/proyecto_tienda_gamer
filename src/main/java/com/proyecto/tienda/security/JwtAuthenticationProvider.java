@@ -55,6 +55,7 @@ public class JwtAuthenticationProvider {
                 .withExpiresAt(validity)
                 .sign(algorithm);
         this.listToken.put(tokenCreated, clienteDto);
+        System.out.println("--------------------Numero de tokens="+this.listToken.size()+"-----------------------");
         return tokenCreated;
     }
     /**

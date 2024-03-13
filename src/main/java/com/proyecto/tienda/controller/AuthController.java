@@ -29,7 +29,7 @@ public class AuthController {
         return ResponseEntity.ok(iAuthUseCase.signIn(authClienteDto));
     }
 
-    @PostMapping(path = "/sign-out")
+    @DeleteMapping(path = "/sign-out")
     public ResponseEntity<JwtResponseDto> signOut(@RequestHeader(name = HttpHeaders.AUTHORIZATION) String jwt){
         return ResponseEntity.ok(iAuthUseCase.signOut(jwt));
     }

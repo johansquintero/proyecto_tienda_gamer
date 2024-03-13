@@ -51,7 +51,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/**").hasAnyRole(Roles.ADMIN,Roles.USER)
-                        .requestMatchers(HttpMethod.POST,"/**").hasRole(Roles.ADMIN)
+                        .requestMatchers(HttpMethod.POST,"/**").hasAnyRole(Roles.ADMIN,Roles.USER)
                         .requestMatchers(HttpMethod.PUT,"/**").hasRole(Roles.ADMIN)
                         .requestMatchers(HttpMethod.DELETE,"/**").hasRole(Roles.ADMIN)
                         .anyRequest().authenticated()
