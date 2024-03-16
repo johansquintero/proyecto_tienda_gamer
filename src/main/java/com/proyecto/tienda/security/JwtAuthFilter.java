@@ -25,7 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     /**
      * Lista blanca de URIS o EndPoints
      */
-    private List<String> urlsToSkip = List.of("/auth", "/swagger-ui.html", "/swagger-ui", "/api-docs");
+    private List<String> urlsToSkip = List.of("/auth", "/swagger-ui.html", "/swagger-ui", "/api-docs","/api/productos/uploads/img/","/images/");
 
     /**
      * Verifica si a la URI no se le debe aplicar el filtro
@@ -52,6 +52,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+
         if (header==null){
             throw new UnauthorizedException();
         }

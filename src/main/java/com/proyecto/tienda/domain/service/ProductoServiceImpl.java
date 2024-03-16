@@ -9,14 +9,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class ProductoServiceImpl implements IProductoUseCase {
-
     private final IProductoRepository iProductoRepository;
 
     final String MESAGGE_EXISTS = "El producto ya se encuentra registrado en la base de datos";
@@ -76,10 +77,21 @@ public class ProductoServiceImpl implements IProductoUseCase {
 
     @Override
     public boolean delete(Long id) {
-        if (iProductoRepository.getProducto(id).isEmpty()) {
+        ProductoResponseDto p = iProductoRepository.getProducto(id).get();
+        if (p!=null) {
             throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
         }
-        iProductoRepository.delete(id);
+        iProductoRepository.delete(id,p.getImagePath());
         return true;
+    }
+
+    /**
+     * @param file
+     * @param id
+     * @return
+     */
+    @Override
+    public Map<String, Object> uploadFile(MultipartFile file, Long id) {
+        return this.iProductoRepository.saveUploadFile(file,id);
     }
 }

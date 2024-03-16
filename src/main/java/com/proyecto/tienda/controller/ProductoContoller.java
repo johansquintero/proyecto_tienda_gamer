@@ -4,21 +4,30 @@ package com.proyecto.tienda.controller;
 import com.proyecto.tienda.domain.dto.producto.ProductoRequestDto;
 import com.proyecto.tienda.domain.dto.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
+import com.proyecto.tienda.domain.usecase.IUploadFileUseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/productos")
 public class ProductoContoller {
     private final IProductoUseCase iProductoUseCase;
+    private final IUploadFileUseCase iUploadFileUseCase;
 
     @GetMapping
     public ResponseEntity<List<ProductoResponseDto>> getAll(){
@@ -26,9 +35,9 @@ public class ProductoContoller {
     }
 
     @GetMapping(path = "/page/{page}")
-    public Page<ProductoResponseDto> page(@PathVariable Integer page) {
-        Pageable pageable = PageRequest.of(page, 2);
-        return iProductoUseCase.getPage(pageable);
+    public ResponseEntity<Page<ProductoResponseDto>> page(@PathVariable Integer page) {
+        Pageable pageable = PageRequest.of(page, 5);
+        return ResponseEntity.ok(iProductoUseCase.getPage(pageable));
     }
 
     @GetMapping(path = "/price/{price}")
@@ -58,5 +67,24 @@ public class ProductoContoller {
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Long id){
         return new ResponseEntity<>(iProductoUseCase.delete(id)? HttpStatus.OK:HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping(path = "/upload")
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id){
+        return new ResponseEntity<Map<String, Object>>(iProductoUseCase.uploadFile(file,id), HttpStatus.CREATED);
+    }
+    @GetMapping(path = "/uploads/img/{imageName:.+}")
+    public ResponseEntity<Resource> loadImage(@PathVariable String imageName) throws IOException {
+        Resource recurso=null;
+        try {
+            recurso = iUploadFileUseCase.load(imageName);
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // se crea la cabecera de la respuesta con la instructiva attachment para forzar
+        // la descarga
+        String contentType = Files.probeContentType(recurso.getFile().toPath());
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE,contentType).body(recurso);
     }
 }

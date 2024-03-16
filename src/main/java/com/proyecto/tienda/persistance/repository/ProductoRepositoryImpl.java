@@ -3,15 +3,22 @@ package com.proyecto.tienda.persistance.repository;
 import com.proyecto.tienda.domain.dto.producto.ProductoRequestDto;
 import com.proyecto.tienda.domain.dto.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.repository.IProductoRepository;
+import com.proyecto.tienda.domain.usecase.IUploadFileUseCase;
 import com.proyecto.tienda.persistance.crud.IProductoCrudRepository;
+import com.proyecto.tienda.persistance.entity.ProductoEntity;
 import com.proyecto.tienda.persistance.mapper.producto.IProductoRequestMapper;
 import com.proyecto.tienda.persistance.mapper.producto.IProductoResponseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -21,6 +28,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
     private final IProductoCrudRepository iProductoCrudRepository;
     private final IProductoRequestMapper iProductoRequestMapper;
     private final IProductoResponseMapper iProductoResponseMapper;
+    private final IUploadFileUseCase iUploadFileUseCase;
 
     /**
      * Obtiene el listado de todos los productos
@@ -100,7 +108,42 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @param id
      */
     @Override
-    public void delete(Long id) {
+    public void delete(Long id, String imagePath) {
+        iUploadFileUseCase.delete(imagePath);
         iProductoCrudRepository.deleteById(id);
+    }
+
+    /**Metodo para actualizar y guardar el archivo de imagen del producto
+     * @return
+     */
+    @Override
+    public Map<String, Object> saveUploadFile(MultipartFile file, Long id) {
+        // se crea el map para enviar el response al front que contendra los
+        // correspondientes mensajes y respuestas del servidor
+        Map<String, Object> response = new HashMap<>();
+        // Obtenemos el producto por el id que viene en el body del request
+        ProductoEntity producto = iProductoCrudRepository.getReferenceById(id);
+
+        if (!file.isEmpty() && producto != null) {// se valida el nombre del archivo y el producto existen
+            String newName = null;
+            try {
+                // se copia el archvo en la ruta
+                newName = iUploadFileUseCase.copy(file,producto.getId().toString());
+            } catch (IOException e) {
+                response.put("mensaje", "Error al subir la imagen:");
+                response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+                return response;
+            }
+            String prevImagePath = producto.getImagePath();
+            iUploadFileUseCase.delete(prevImagePath);
+            producto.setImagePath(newName);
+            iProductoCrudRepository.save(producto);
+            response.put("mensaje", "Has subido correctamente la imagen");
+            response.put("newImage",newName);
+            return response;
+        }
+        response.put("mensaje", "La imagen o el producto no existen");
+        response.put("Error", "Ha ocurrido un error al realizar la solicitud");
+        return response;
     }
 }

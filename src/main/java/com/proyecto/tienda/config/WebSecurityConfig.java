@@ -49,7 +49,7 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**","/productos/uploads/**","/images/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/**").hasAnyRole(Roles.ADMIN,Roles.USER)
                         .requestMatchers(HttpMethod.POST,"/**").hasAnyRole(Roles.ADMIN,Roles.USER)
                         .requestMatchers(HttpMethod.PUT,"/**").hasRole(Roles.ADMIN)

@@ -4,8 +4,10 @@ import com.proyecto.tienda.domain.dto.producto.ProductoRequestDto;
 import com.proyecto.tienda.domain.dto.producto.ProductoResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface IProductoRepository {
@@ -23,5 +25,6 @@ public interface IProductoRepository {
 
     ProductoResponseDto save(ProductoRequestDto newProducto);
 
-    void delete(Long id);
+    Map<String, Object> saveUploadFile(MultipartFile file, Long id);
+    void delete(Long id, String imagePath);
 }
