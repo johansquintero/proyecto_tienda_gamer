@@ -11,6 +11,8 @@ import com.proyecto.tienda.persistance.entity.ProductoEntity;
 import com.proyecto.tienda.persistance.mapper.compra.ICompraRequestMapper;
 import com.proyecto.tienda.persistance.mapper.compra.ICompraResponseMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,6 +34,18 @@ public class CompraRepositoryImpl implements ICompraRepository {
     @Override
     public List<CompraResponseDto> getAllByCustomer(Long customerId) {
         return iCompraResponseMapper.toComprasResponseDto(iCompraCrudRepository.findAllByCustomerId(customerId));
+    }
+
+    /**
+     * @param customerId
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<CompraResponseDto> getAllByCustomerAndPage(Long customerId, Pageable pageable) {
+        return this.iCompraCrudRepository.findAllByCustomerId(customerId,pageable).map(compraEntity -> {
+            return this.iCompraResponseMapper.toCompraResponseDto(compraEntity);
+        });
     }
 
     @Override

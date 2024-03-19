@@ -3,6 +3,9 @@ package com.proyecto.tienda.controller;
 import com.proyecto.tienda.domain.dto.tipo.TipoDto;
 import com.proyecto.tienda.domain.usecase.ITipoUseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,12 @@ public class TipoController {
     @GetMapping(path = "/{id}")
     ResponseEntity<TipoDto> getTipo(@PathVariable Long id) {
         return ResponseEntity.of(iTipoUseCase.getTipo(id));
+    }
+
+    @GetMapping(path = "/page/{page}")
+    ResponseEntity<Page<TipoDto>> getTipoByPage(@PathVariable Integer page) {
+        Pageable pageable = PageRequest.of(page,2);
+        return ResponseEntity.ok(this.iTipoUseCase.getAllByPage(pageable));
     }
 
     @PostMapping

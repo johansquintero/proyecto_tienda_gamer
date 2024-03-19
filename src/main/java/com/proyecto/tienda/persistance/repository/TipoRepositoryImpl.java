@@ -6,6 +6,8 @@ import com.proyecto.tienda.persistance.crud.ITipoCrudRepository;
 import com.proyecto.tienda.persistance.entity.TipoEntity;
 import com.proyecto.tienda.persistance.mapper.tipo.ITipoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,6 +24,17 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * Crud de la entidad tipo
      */
     private final ITipoCrudRepository iTipoCrudRepository;
+
+    /**
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<TipoDto> getAllByPage(Pageable pageable) {
+        return this.iTipoCrudRepository.findAll(pageable).map(tipoEntity -> {
+            return this.iTipoMapper.toTipoDto(tipoEntity);
+        });
+    }
 
     /**
      * Mapper de los tipos

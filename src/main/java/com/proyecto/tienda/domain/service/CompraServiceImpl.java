@@ -5,9 +5,11 @@ import com.proyecto.tienda.domain.dto.compra.CompraRequestDto;
 import com.proyecto.tienda.domain.dto.compra.CompraResponseDto;
 import com.proyecto.tienda.domain.repository.ICompraRepository;
 import com.proyecto.tienda.domain.usecase.ICompraUseCase;
-import com.proyecto.tienda.domain.usecase.IProductoUseCase;
+import com.proyecto.tienda.exception.ErrorAlertMessages;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CompraServiceImpl implements ICompraUseCase {
     private final ICompraRepository iCompraRepository;
-    private final IProductoUseCase iProductoUseCase;
 
-    final String MESAGGE_EXISTS = "La compra ya se encuentra registrada en la base de datos";
-    final String MESAGGE_NOT_EXISTS = "La compra no se encuentra registrada en la base de datos";
 
     @Override
     public List<CompraResponseDto> getAll() {
@@ -32,11 +31,21 @@ public class CompraServiceImpl implements ICompraUseCase {
         return iCompraRepository.getAllByCustomer(customerId);
     }
 
+    /**
+     * @param customerId
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<CompraResponseDto> getAllByCustomerAndPage(Long customerId, Pageable pageable) {
+        return this.iCompraRepository.getAllByCustomerAndPage(customerId, pageable);
+    }
+
     @Override
     public Optional<CompraResponseDto> getCompra(Long id) {
         Optional<CompraResponseDto> compraResponseOptional = iCompraRepository.getCompra(id);
-        if (compraResponseOptional.isEmpty()){
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+        if (compraResponseOptional.isEmpty()) {
+            throw new ErrorValidationExceptions(ErrorAlertMessages.PURCHASE_NOT_EXISTS_MESSAGE);
         }
         return compraResponseOptional;
     }

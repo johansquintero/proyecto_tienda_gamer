@@ -6,6 +6,8 @@ import com.proyecto.tienda.persistance.entity.MarcaEntity;
 import com.proyecto.tienda.persistance.mapper.marca.IMarcaMapper;
 import com.proyecto.tienda.persistance.crud.IMarcaCrudRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +38,17 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
         return iMarcaMapper.toMarcasDto(iMarcaCrudRepository.findAll());
     }
 
+    /**
+     *
+     * @param pageable
+     * @return retorna la pagina solicitada
+     */
+    @Override
+    public Page<MarcaDto> getAllByPage(Pageable pageable){
+        return this.iMarcaCrudRepository.findAll(pageable).map(marcaEntity -> {
+           return this.iMarcaMapper.toMarcaDto(marcaEntity);
+        });
+    }
     /**
      * Devuelve una marca a partir de su ID
      * @param id identificador de la marca

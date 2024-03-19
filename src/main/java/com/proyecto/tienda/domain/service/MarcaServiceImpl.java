@@ -3,8 +3,11 @@ package com.proyecto.tienda.domain.service;
 import com.proyecto.tienda.domain.dto.marca.MarcaDto;
 import com.proyecto.tienda.domain.repository.IMarcaRepository;
 import com.proyecto.tienda.domain.usecase.IMarcaUseCase;
+import com.proyecto.tienda.exception.ErrorAlertMessages;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,11 +26,6 @@ public class MarcaServiceImpl implements IMarcaUseCase {
      */
     private final IMarcaRepository iMarcaRepository;
 
-    /**
-     * Mensajes de error
-     */
-    final String MESAGGE_EXISTS = "La marca ya se encuentra registrada en la base de datos";
-    final String MESAGGE_NOT_EXISTS = "La marca no se encuentra registrada en la base de datos";
 
     /**
      * @return retorna una lista con todas la Marcas de los productos
@@ -35,6 +33,15 @@ public class MarcaServiceImpl implements IMarcaUseCase {
     @Override
     public List<MarcaDto> getAll() {
         return iMarcaRepository.getAll();
+    }
+
+    /**
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<MarcaDto> getAllByPage(Pageable pageable) {
+        return this.iMarcaRepository.getAllByPage(pageable);
     }
 
     /**
@@ -47,7 +54,7 @@ public class MarcaServiceImpl implements IMarcaUseCase {
     public Optional<MarcaDto> getMarca(Long id) {
         Optional<MarcaDto> marcaOptional = iMarcaRepository.getMarca(id);
         if (marcaOptional.isEmpty()) {
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.BRAND_NOT_EXISTS_MESSAGE);
         }
         return iMarcaRepository.getMarca(id);
     }
@@ -61,7 +68,7 @@ public class MarcaServiceImpl implements IMarcaUseCase {
     @Override
     public MarcaDto save(MarcaDto newMarca) {
         if (iMarcaRepository.getMarcaByName(newMarca.getName()).isPresent()) {
-            throw new ErrorValidationExceptions(this.MESAGGE_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.BRAND_ALREADY_EXISTS_MESSAGE);
         }
         return iMarcaRepository.save(newMarca);
     }
@@ -76,11 +83,11 @@ public class MarcaServiceImpl implements IMarcaUseCase {
     public Optional<MarcaDto> update(MarcaDto marca) {
         Optional<MarcaDto> optionalMarcaPojo = iMarcaRepository.getMarca(marca.getId());
         if (optionalMarcaPojo.isEmpty()) {
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.BRAND_NOT_EXISTS_MESSAGE);
         }
         optionalMarcaPojo = iMarcaRepository.getMarcaByName(marca.getName());
         if (optionalMarcaPojo.isPresent() && marca.getId() != optionalMarcaPojo.get().getId()) {
-            throw new ErrorValidationExceptions(this.MESAGGE_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.BRAND_ALREADY_EXISTS_MESSAGE);
         }
         return Optional.of(iMarcaRepository.save(marca));
     }

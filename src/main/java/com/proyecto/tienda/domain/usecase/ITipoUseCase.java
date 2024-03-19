@@ -1,6 +1,8 @@
 package com.proyecto.tienda.domain.usecase;
 
 import com.proyecto.tienda.domain.dto.tipo.TipoDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +13,12 @@ public interface ITipoUseCase {
      */
     List<TipoDto> getAll();
 
+    /**
+     *
+     * @param pageable
+     * @return
+     */
+    Page<TipoDto> getAllByPage(Pageable pageable);
     /**
      * Devuelve un tipo dado su ID
      * @param id identificador del tipo

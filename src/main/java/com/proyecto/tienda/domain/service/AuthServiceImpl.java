@@ -5,6 +5,7 @@ import com.proyecto.tienda.domain.dto.security.AuthClienteDto;
 import com.proyecto.tienda.domain.dto.security.JwtResponseDto;
 import com.proyecto.tienda.domain.repository.IClienteRepository;
 import com.proyecto.tienda.domain.usecase.IAuthUseCase;
+import com.proyecto.tienda.exception.ErrorAlertMessages;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import com.proyecto.tienda.security.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,6 @@ public class AuthServiceImpl implements IAuthUseCase {
      */
     private final PasswordEncoder passwordEncoder;
 
-    final String NOT_EXISTS_MESSAGE = "El cliente no se encuentra registrado en la base de datos";
-
-    final String INCORRECT_PASSWORD_MESSAGE= "Contraseña incorrecta";
-
-
     /**
      * @param authClienteDto
      * @return JwtResponseDto del token creado para el cliente
@@ -43,10 +39,10 @@ public class AuthServiceImpl implements IAuthUseCase {
     public JwtResponseDto signIn(AuthClienteDto authClienteDto) {
         Optional<ClienteDto> cliente = iClienteRepository.getByUsername(authClienteDto.getUsername());
         if (cliente.isEmpty()){
-            throw new ErrorValidationExceptions(this.NOT_EXISTS_MESSAGE);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.USER_NOT_EXISTS_MESSAGE);
         }
         if (!passwordEncoder.matches(authClienteDto.getPassword(),cliente.get().getPassword())){
-            throw new ErrorValidationExceptions(this.INCORRECT_PASSWORD_MESSAGE);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.USER_INCORRECT_PASSWORD_MESSAGE);
         }
         String token = jwtAuthenticationProvider.createToken(cliente.get());
         return new JwtResponseDto(token);

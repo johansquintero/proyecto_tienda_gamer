@@ -1,6 +1,8 @@
 package com.proyecto.tienda.domain.usecase;
 
 import com.proyecto.tienda.domain.dto.marca.MarcaDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +13,12 @@ public interface IMarcaUseCase {
      */
     List<MarcaDto> getAll();
 
+    /**
+     *
+     * @param pageable
+     * @return devuelve el objeto paginator solicitado por el objeto pageable
+     */
+    Page<MarcaDto> getAllByPage(Pageable pageable);
     /**
      * Devuelve una marca de la tabla marcas
      * @param id identificador de la marca

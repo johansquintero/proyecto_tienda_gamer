@@ -3,8 +3,11 @@ package com.proyecto.tienda.domain.service;
 import com.proyecto.tienda.domain.dto.tipo.TipoDto;
 import com.proyecto.tienda.domain.repository.ITipoRepository;
 import com.proyecto.tienda.domain.usecase.ITipoUseCase;
+import com.proyecto.tienda.exception.ErrorAlertMessages;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +22,6 @@ public class TipoServiceImpl implements ITipoUseCase {
 
     private final ITipoRepository iTipoRepository;
 
-    final String EXISTS_MESSAGE = "El tipo de deproducto ya se encuentra registrado";
-    final String NOT_EXISTS_MESSAGE = "El tipo de deproducto no se encuentra registrado";
-
-
     /**
      * @return retorna una lista con todas las tipos de producto
      */
@@ -30,6 +29,15 @@ public class TipoServiceImpl implements ITipoUseCase {
     @Override
     public List<TipoDto> getAll() {
         return iTipoRepository.getAll();
+    }
+
+    /**
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<TipoDto> getAllByPage(Pageable pageable) {
+        return this.iTipoRepository.getAllByPage(pageable);
     }
 
     /**
@@ -42,7 +50,7 @@ public class TipoServiceImpl implements ITipoUseCase {
     public Optional<TipoDto> getTipo(Long id) {
         Optional<TipoDto> tipoOptional = iTipoRepository.getTipo(id);
         if (tipoOptional.isEmpty()) {
-            throw new ErrorValidationExceptions(this.NOT_EXISTS_MESSAGE);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.TYPE_NOT_EXISTS_MESSAGE);
         }
         return tipoOptional;
     }
@@ -56,7 +64,7 @@ public class TipoServiceImpl implements ITipoUseCase {
     @Override
     public TipoDto save(TipoDto newTipo) {
         if (iTipoRepository.getByName(newTipo.getName()).isPresent()) {
-            throw new ErrorValidationExceptions(this.EXISTS_MESSAGE);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.TYPE_ALREADY_EXISTS_MESSAGE);
         }
         return iTipoRepository.save(newTipo);
     }
@@ -70,7 +78,7 @@ public class TipoServiceImpl implements ITipoUseCase {
     @Override
     public Optional<TipoDto> update(TipoDto tipo) {
         if (iTipoRepository.getTipo(tipo.getId()).isEmpty()) {
-            throw new ErrorValidationExceptions(this.NOT_EXISTS_MESSAGE);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.TYPE_NOT_EXISTS_MESSAGE);
         }
         return Optional.of(iTipoRepository.save(tipo));
     }

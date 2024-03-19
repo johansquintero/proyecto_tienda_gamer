@@ -39,7 +39,6 @@ public class UploadFileServiceImpl implements IUploadFileUseCase {
         if (!resource.exists() && !resource.isReadable()) {
             path = Paths.get("src/main/resources/static/images").resolve("no_product.png").toAbsolutePath();
             resource = new UrlResource(path.toUri());
-            System.out.println("======================LLEGO====================");
         }
         return resource;
     }

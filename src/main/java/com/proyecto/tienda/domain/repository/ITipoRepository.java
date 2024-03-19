@@ -1,6 +1,8 @@
 package com.proyecto.tienda.domain.repository;
 
 import com.proyecto.tienda.domain.dto.tipo.TipoDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +15,12 @@ public interface ITipoRepository {
      * @return retorna una lista con todas las tipos de producto
      */
     List<TipoDto> getAll();
+
+    /**
+     *
+     * @return Objeto pagina de tipoDto solicitada por el bojeto pageable
+     */
+    Page<TipoDto> getAllByPage(Pageable pageable);
 
     /**
      * Devuelve un tipo dado su ID

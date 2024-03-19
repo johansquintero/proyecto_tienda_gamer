@@ -3,6 +3,7 @@ package com.proyecto.tienda.domain.service;
 import com.proyecto.tienda.domain.dto.cliente.ClienteDto;
 import com.proyecto.tienda.domain.dto.cliente.ClienteResponseDto;
 import com.proyecto.tienda.domain.repository.IClienteRepository;
+import com.proyecto.tienda.exception.ErrorAlertMessages;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import com.proyecto.tienda.domain.usecase.IClienteUseCase;
 import com.proyecto.tienda.security.Roles;
@@ -30,9 +31,6 @@ public class ClienteServiceImpl implements IClienteUseCase {
     /**
      * Mensajes de excepciones error
      */
-    final String MESAGGE_EXISTS = "El cliente ya se encuentra registrado en la base de datos";
-    final String MESAGGE_NOT_EXISTS = "El cliente no se encuentra registrado en la base de datos";
-    final String MESAGGE_EMAIL = "El email no tiene el formato requerido";
 
     private final PasswordEncoder passwordEncoder;
 
@@ -55,7 +53,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
     public Optional<ClienteDto> getCliente(Long id) {
         Optional<ClienteDto> clienteOptional = iClienteRepository.getById(id);
         if (clienteOptional.isEmpty()){
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.USER_NOT_EXISTS_MESSAGE);
         }
         return clienteOptional;
     }
@@ -71,7 +69,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
     public Optional<ClienteDto> getByEmail(String email) {
         Optional<ClienteDto> clienteOptional = iClienteRepository.getByEmail(email);
         if (clienteOptional.isEmpty()){
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.USER_NOT_EXISTS_MESSAGE);
         }
         return clienteOptional;
     }
@@ -86,7 +84,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
     public Optional<ClienteDto> getByUsername(String username) {
         Optional<ClienteDto> clienteOptional = iClienteRepository.getByUsername(username);
         if (clienteOptional.isEmpty()){
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.USER_NOT_EXISTS_MESSAGE);
         }
         return clienteOptional;
     }
@@ -102,9 +100,9 @@ public class ClienteServiceImpl implements IClienteUseCase {
     public ClienteResponseDto save(ClienteDto newCliente) {
         if (!newCliente.getEmail().matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
-            throw new ErrorValidationExceptions(this.MESAGGE_EMAIL);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.USER_BAD_FORMAT_EMAIL_MESSAGE);
         }else if (iClienteRepository.getByEmail(newCliente.getEmail()).isPresent() || iClienteRepository.getByUsername(newCliente.getUsername()).isPresent()){
-            throw new ErrorValidationExceptions(this.MESAGGE_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.USER_ALREADY_EXISTS_MESSAGE);
         }
 
         String passwordGenerated = generateRandomPassword(10);
@@ -125,7 +123,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
     @Override
     public Optional<ClienteDto> update(ClienteDto cliente) {
         if (iClienteRepository.getById(cliente.getId()).isEmpty()) {
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.USER_NOT_EXISTS_MESSAGE);
         }
         return Optional.of(iClienteRepository.save(cliente));
     }
@@ -139,7 +137,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
     @Override
     public boolean delete(Long id) {
         if (iClienteRepository.getById(id).isEmpty()) {
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.USER_NOT_EXISTS_MESSAGE);
         }
         iClienteRepository.delete(id);
         return true;

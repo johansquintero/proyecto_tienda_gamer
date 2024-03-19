@@ -4,6 +4,7 @@ import com.proyecto.tienda.domain.dto.producto.ProductoRequestDto;
 import com.proyecto.tienda.domain.dto.producto.ProductoResponseDto;
 import com.proyecto.tienda.domain.repository.IProductoRepository;
 import com.proyecto.tienda.domain.usecase.IProductoUseCase;
+import com.proyecto.tienda.exception.ErrorAlertMessages;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,10 +21,6 @@ import java.util.Optional;
 public class ProductoServiceImpl implements IProductoUseCase {
     private final IProductoRepository iProductoRepository;
 
-    final String MESAGGE_EXISTS = "El producto ya se encuentra registrado en la base de datos";
-    final String MESAGGE_NOT_EXISTS = "El producto no se encuentra registrado en la base de datos";
-
-
     @Override
     public List<ProductoResponseDto> getAll() {
         return iProductoRepository.getAll();
@@ -38,7 +35,7 @@ public class ProductoServiceImpl implements IProductoUseCase {
     public Optional<ProductoResponseDto> getProducto(Long id) {
         Optional<ProductoResponseDto> productoOptional = iProductoRepository.getProducto(id);
         if (productoOptional.isEmpty()) {
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.PRODUCT_NOT_EXISTS_MESSAGE);
         }
         return productoOptional;
     }
@@ -47,7 +44,7 @@ public class ProductoServiceImpl implements IProductoUseCase {
     public Optional<ProductoResponseDto> getProductoByName(String name) {
         Optional<ProductoResponseDto> productoOptional = iProductoRepository.getProductoByName(name);
         if (productoOptional.isEmpty()) {
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.PRODUCT_NOT_EXISTS_MESSAGE);
         }
         return productoOptional;
     }
@@ -70,7 +67,7 @@ public class ProductoServiceImpl implements IProductoUseCase {
     @Override
     public Optional<ProductoResponseDto> update(ProductoRequestDto producto) {
         if (iProductoRepository.getProducto(producto.getId()).isEmpty()) {
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.PRODUCT_NOT_EXISTS_MESSAGE);
         }
         return Optional.of(iProductoRepository.save(producto));
     }
@@ -79,7 +76,7 @@ public class ProductoServiceImpl implements IProductoUseCase {
     public boolean delete(Long id) {
         ProductoResponseDto p = iProductoRepository.getProducto(id).get();
         if (p!=null) {
-            throw new ErrorValidationExceptions(this.MESAGGE_NOT_EXISTS);
+            throw new ErrorValidationExceptions(ErrorAlertMessages.PRODUCT_NOT_EXISTS_MESSAGE);
         }
         iProductoRepository.delete(id,p.getImagePath());
         return true;

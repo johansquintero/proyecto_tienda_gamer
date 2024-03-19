@@ -36,7 +36,7 @@ public class ProductoContoller {
 
     @GetMapping(path = "/page/{page}")
     public ResponseEntity<Page<ProductoResponseDto>> page(@PathVariable Integer page) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 2);
         return ResponseEntity.ok(iProductoUseCase.getPage(pageable));
     }
 

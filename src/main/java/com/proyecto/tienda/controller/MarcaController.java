@@ -3,6 +3,9 @@ package com.proyecto.tienda.controller;
 import com.proyecto.tienda.domain.dto.marca.MarcaDto;
 import com.proyecto.tienda.domain.usecase.IMarcaUseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,12 @@ public class MarcaController {
         return ResponseEntity.ok(this.iMarcaUseCase.getAll());
         //return ResponseEntity.status(HttpStatus.OK).body(this.iMarcaUseCase.getAll());
         //return new ResponseEntity<>(this.iMarcaUseCase.getAll(),HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/page/{page}")
+    public ResponseEntity<Page<MarcaDto>> getAllByPage(@PathVariable Integer page){
+        Pageable pageable = PageRequest.of(page,5);
+        return ResponseEntity.ok(this.iMarcaUseCase.getAllByPage(pageable));
     }
 
     /**
