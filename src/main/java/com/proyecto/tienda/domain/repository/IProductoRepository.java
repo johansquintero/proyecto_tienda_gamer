@@ -19,6 +19,10 @@ public interface IProductoRepository {
 
     Optional<ProductoResponseDto> getProductoByName(String name);
 
+    List<ProductoResponseDto> getAllProductosByName(String name);
+
+    Page<ProductoResponseDto> getAllProductosByNameAndPage(String name, Pageable pageable);
+
     List<ProductoResponseDto> getProductoByTipo(Long typeId);
 
     List<ProductoResponseDto> getProductoByPrice(Double price);

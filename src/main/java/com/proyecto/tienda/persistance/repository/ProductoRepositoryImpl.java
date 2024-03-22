@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      *
      * @return lista de productos
      */
+    @Transactional(readOnly = true)
     @Override
     public List<ProductoResponseDto> getAll() {
         return iProductoResponseMapper.toProductosResponseDto(iProductoCrudRepository.findAll());
@@ -44,6 +46,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @param pageable pageable a buscar
      * @return pagina del producto
      */
+    @Transactional(readOnly = true)
     @Override
     public Page<ProductoResponseDto> getPage(Pageable pageable) {
         return iProductoCrudRepository.findAll(pageable).map(iProductoResponseMapper::toProductoResponseDto);
@@ -55,6 +58,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @param id id a consultar
      * @return optional del producto
      */
+    @Transactional(readOnly = true)
     @Override
     public Optional<ProductoResponseDto> getProducto(Long id) {
         return iProductoCrudRepository.findById(id).map(iProductoResponseMapper::toProductoResponseDto);
@@ -66,9 +70,33 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @param name titulo a buscar
      * @return Optional del producto
      */
+    @Transactional(readOnly = true)
     @Override
     public Optional<ProductoResponseDto> getProductoByName(String name) {
         return this.iProductoCrudRepository.findByName(name).map(this.iProductoResponseMapper::toProductoResponseDto);
+    }
+
+    /**
+     * @param name
+     * @return
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public List<ProductoResponseDto> getAllProductosByName(String name) {
+        return this.iProductoResponseMapper.toProductosResponseDto(this.iProductoCrudRepository.findAllByName(name));
+    }
+
+    /**
+     * @param name
+     * @param pageable
+     * @return
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public Page<ProductoResponseDto> getAllProductosByNameAndPage(String name, Pageable pageable) {
+        return this.iProductoCrudRepository.findAllByNameAndPage(name,pageable).map(productoEntity -> {
+            return this.iProductoResponseMapper.toProductoResponseDto(productoEntity);
+        });
     }
 
     /**
@@ -77,6 +105,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @param typeId id del tipo
      * @return Lista de los tipos encontrados
      */
+    @Transactional(readOnly = true)
     @Override
     public List<ProductoResponseDto> getProductoByTipo(Long typeId) {
         return iProductoResponseMapper.toProductosResponseDto(iProductoCrudRepository.findAllByTipoId(typeId));
@@ -88,6 +117,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @param price precio comparar
      * @return lista de los productos
      */
+    @Transactional(readOnly = true)
     @Override
     public List<ProductoResponseDto> getProductoByPrice(Double price) {
         return iProductoResponseMapper.toProductosResponseDto(iProductoCrudRepository.findAllByPriceLessThanEqual(price));
@@ -99,6 +129,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
      * @param newProducto producto a guardar
      * @return producto guardado
      */
+    @Transactional
     @Override
     public ProductoResponseDto save(ProductoRequestDto newProducto) {
         return iProductoResponseMapper.toProductoResponseDto(iProductoCrudRepository.save(iProductoRequestMapper.toProductoEntity(newProducto)));
@@ -107,6 +138,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
     /**
      * @param id
      */
+    @Transactional
     @Override
     public void delete(Long id, String imagePath) {
         iUploadFileUseCase.delete(imagePath);
@@ -116,6 +148,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
     /**Metodo para actualizar y guardar el archivo de imagen del producto
      * @return
      */
+    @Transactional
     @Override
     public Map<String, Object> saveUploadFile(MultipartFile file, Long id) {
         // se crea el map para enviar el response al front que contendra los

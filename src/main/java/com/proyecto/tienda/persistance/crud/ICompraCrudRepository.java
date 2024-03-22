@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ICompraCrudRepository extends JpaRepository<CompraEntity,Long> {
     List<CompraEntity> findAllByCustomerId(Long customerId);
-    Page<CompraEntity> findAllByCustomerId(Long customerId, Pageable pageable);
+    Page<CompraEntity> findAllByCustomerIdOrderByDate(Long customerId, Pageable pageable);
 }

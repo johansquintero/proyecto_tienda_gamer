@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,10 +26,18 @@ public class TipoRepositoryImpl implements ITipoRepository {
      */
     private final ITipoCrudRepository iTipoCrudRepository;
 
+
+
+    /**
+     * Mapper de los tipos
+     */
+    private final ITipoMapper iTipoMapper;
+
     /**
      * @param pageable
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public Page<TipoDto> getAllByPage(Pageable pageable) {
         return this.iTipoCrudRepository.findAll(pageable).map(tipoEntity -> {
@@ -37,14 +46,9 @@ public class TipoRepositoryImpl implements ITipoRepository {
     }
 
     /**
-     * Mapper de los tipos
-     */
-    private final ITipoMapper iTipoMapper;
-
-
-    /**
      * @return retorna una lista con todas las tipos de producto
      */
+    @Transactional(readOnly = true)
     @Override
     public List<TipoDto> getAll() {
         return iTipoMapper.toTiposDto(iTipoCrudRepository.findAll());
@@ -56,6 +60,7 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @param id identificador del tipo
      * @return devuelve un Optional del tipo
      */
+    @Transactional(readOnly = true)
     @Override
     public Optional<TipoDto> getTipo(Long id) {
         return iTipoCrudRepository.findById(id).map(iTipoMapper::toTipoDto);
@@ -67,6 +72,7 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @param name
      * @return Optional del tipo encontrado
      */
+    @Transactional(readOnly = true)
     @Override
     public Optional<TipoDto> getByName(String name) {
         return iTipoCrudRepository.findByName(name).map(iTipoMapper::toTipoDto);
@@ -78,6 +84,7 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @param newTipo tipo a insertar en la base de datos
      * @return retorna el tipo creado
      */
+    @Transactional
     @Override
     public TipoDto save(TipoDto newTipo) {
         return this.iTipoMapper.toTipoDto(this.iTipoCrudRepository.save(this.iTipoMapper.toTipoEntity(newTipo)));
@@ -89,6 +96,7 @@ public class TipoRepositoryImpl implements ITipoRepository {
      * @param id identifiacor del tipo a eliminar
      * @return boolean que confirma la eliminacion del elemento
      */
+    @Transactional
     @Override
     public boolean delete(Long id) {
         Optional<TipoEntity> tipoEntityOptional = this.iTipoCrudRepository.findById(id);

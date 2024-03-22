@@ -15,9 +15,15 @@ public interface IProductoUseCase {
 
     Page<ProductoResponseDto> getPage(Pageable pageable);
 
+    List<ProductoResponseDto> getAllByName(String name);
+
+    Page<ProductoResponseDto> getAllByNameAndPage(String name, Pageable pageable);
+
+
     Optional<ProductoResponseDto> getProducto(Long id);
 
     Optional<ProductoResponseDto> getProductoByName(String name);
+
 
     List<ProductoResponseDto> getProductoByTipo(Long typeId);
 

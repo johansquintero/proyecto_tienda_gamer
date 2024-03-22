@@ -26,9 +26,30 @@ public class ProductoServiceImpl implements IProductoUseCase {
         return iProductoRepository.getAll();
     }
 
+
+
     @Override
     public Page<ProductoResponseDto> getPage(Pageable pageable) {
         return iProductoRepository.getPage(pageable);
+    }
+
+    /**
+     * @param name
+     * @return
+     */
+    @Override
+    public List<ProductoResponseDto> getAllByName(String name) {
+        return this.iProductoRepository.getAllProductosByName(name);
+    }
+
+    /**
+     * @param name
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<ProductoResponseDto> getAllByNameAndPage(String name, Pageable pageable) {
+        return this.iProductoRepository.getAllProductosByNameAndPage(name,pageable);
     }
 
     @Override

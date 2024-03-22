@@ -6,6 +6,7 @@ import com.proyecto.tienda.persistance.mapper.IClienteMapper;
 import com.proyecto.tienda.persistance.crud.IClienteCrudRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class ClienteRepositoryImpl implements IClienteRepository {
      */
     private final IClienteMapper iClienteMapper;
 
+    @Transactional(readOnly = true)
     @Override
     public List<ClienteDto> getAll() {
         return iClienteMapper.toClientesDto(iClienteCrudRepository.findAll());
@@ -37,6 +39,7 @@ public class ClienteRepositoryImpl implements IClienteRepository {
                 .map(iClienteMapper::toClienteDto);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<ClienteDto> getByEmail(String email) {
         return iClienteCrudRepository.findByEmail(email)
@@ -48,17 +51,18 @@ public class ClienteRepositoryImpl implements IClienteRepository {
      *
      * @param username@return devuelve el opcinal del cliente
      */
+    @Transactional(readOnly = true)
     @Override
     public Optional<ClienteDto> getByUsername(String username) {
         return iClienteCrudRepository.findByUsername(username)
                 .map(iClienteMapper::toClienteDto);
     }
-
+    @Transactional
     @Override
     public ClienteDto save(ClienteDto newCliente) {
         return iClienteMapper.toClienteDto(iClienteCrudRepository.save(iClienteMapper.toClienteEntity(newCliente)));
     }
-
+    @Transactional
     @Override
     public void delete(Long id) {
         iClienteCrudRepository.deleteById(id);

@@ -33,6 +33,7 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
     /**
      * @return retorna una lista con todas la Marcas de los productos
      */
+    @Transactional(readOnly = true)
     @Override
     public List<MarcaDto> getAll() {
         return iMarcaMapper.toMarcasDto(iMarcaCrudRepository.findAll());
@@ -43,6 +44,7 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
      * @param pageable
      * @return retorna la pagina solicitada
      */
+    @Transactional(readOnly = true)
     @Override
     public Page<MarcaDto> getAllByPage(Pageable pageable){
         return this.iMarcaCrudRepository.findAll(pageable).map(marcaEntity -> {
@@ -54,6 +56,7 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
      * @param id identificador de la marca
      * @return devuelve el optional casteando a un dto la entidad
      */
+    @Transactional(readOnly = true)
     @Override
     public Optional<MarcaDto> getMarca(Long id) {
         return iMarcaCrudRepository.findById(id).map(iMarcaMapper::toMarcaDto);//map corto
@@ -65,6 +68,7 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
      * @param name nombre de la marca
      * @return devuelve un Optional de la marca
      */
+    @Transactional(readOnly = true)
     @Override
     public Optional<MarcaDto> getMarcaByName(String name) {
         return iMarcaCrudRepository.findByName(name).map(iMarcaMapper::toMarcaDto);
@@ -75,6 +79,7 @@ public class MarcaRepositoryImpl implements IMarcaRepository {
      * @param newMarca marca a insertar en la base de datos
      * @return retorna la marca creada
      */
+    @Transactional
     @Override
     public MarcaDto save(MarcaDto newMarca) {
         MarcaEntity marcaEntity = iMarcaMapper.toMarcaEntity(newMarca);

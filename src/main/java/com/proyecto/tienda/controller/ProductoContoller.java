@@ -50,6 +50,17 @@ public class ProductoContoller {
         return ResponseEntity.of(iProductoUseCase.getProductoByName(name));
     }
 
+    @GetMapping(path = "/all/name/{name}")
+    public ResponseEntity<List<ProductoResponseDto>> getAllByName(@PathVariable(name = "name") String name){
+        return ResponseEntity.ok(this.iProductoUseCase.getAllByName(name));
+    }
+    @GetMapping(path = "/page={page}/name={name}")
+    public ResponseEntity<Page<ProductoResponseDto>> getAllByNamePage(
+            @PathVariable(name = "page") Integer page,@PathVariable(name = "name") String name){
+        Pageable pageable = PageRequest.of(page,2);
+        return ResponseEntity.ok(this.iProductoUseCase.getAllByNameAndPage(name,pageable));
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<ProductoResponseDto> getProducto(@PathVariable Long id){
         return ResponseEntity.of(iProductoUseCase.getProducto(id));

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,11 +27,13 @@ public class CompraRepositoryImpl implements ICompraRepository {
     private final ICompraResponseMapper iCompraResponseMapper;
     private final IProductoCrudRepository iProductoCrudRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public List<CompraResponseDto> getAll() {
         return iCompraResponseMapper.toComprasResponseDto(iCompraCrudRepository.findAll());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CompraResponseDto> getAllByCustomer(Long customerId) {
         return iCompraResponseMapper.toComprasResponseDto(iCompraCrudRepository.findAllByCustomerId(customerId));
@@ -41,18 +44,19 @@ public class CompraRepositoryImpl implements ICompraRepository {
      * @param pageable
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public Page<CompraResponseDto> getAllByCustomerAndPage(Long customerId, Pageable pageable) {
-        return this.iCompraCrudRepository.findAllByCustomerId(customerId,pageable).map(compraEntity -> {
-            return this.iCompraResponseMapper.toCompraResponseDto(compraEntity);
-        });
+        return this.iCompraCrudRepository.findAllByCustomerIdOrderByDate(customerId,pageable).map(compraEntity -> this.iCompraResponseMapper.toCompraResponseDto(compraEntity));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<CompraResponseDto> getCompra(Long id) {
         return iCompraCrudRepository.findById(id).map(iCompraResponseMapper::toCompraResponseDto);
     }
 
+    @Transactional
     @Override
     public CompraIdResponseDto save(CompraRequestDto compraRequestDto) {
         CompraEntity compraEntity = iCompraRequestMapper.toCompraEntity(compraRequestDto);
