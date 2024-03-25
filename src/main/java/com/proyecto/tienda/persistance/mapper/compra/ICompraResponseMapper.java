@@ -14,9 +14,6 @@ import java.util.List;
 @Mapper(componentModel = "spring",uses = {ICompraProductoResponseMapper.class})
 public interface ICompraResponseMapper {
 
-    @Mapping(target = "clienteEntity", ignore = true)
-    CompraEntity toCompraEntity(CompraResponseDto compraResponseDto);
-
     CompraResponseDto toCompraResponseDto(CompraEntity compraEntity);
 
     List<CompraResponseDto> toComprasResponseDto(List<CompraEntity> comprasEntitie);

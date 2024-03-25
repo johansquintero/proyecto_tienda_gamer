@@ -19,7 +19,7 @@ public class CompraProductoRequestDto {
     private Long productId;
 
     /**
-     * cantidad de productos a comprar
+     * cantidad del producto a comprar
      */
     private Integer quantity;
 

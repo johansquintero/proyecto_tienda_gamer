@@ -21,6 +21,10 @@ public class ErrorAlertMessages {
     public static final String PRODUCT_NOT_EXISTS_MESSAGE = "El producto no se encuentra registrado en la base de datos";
 
     public static final String TYPE_ALREADY_EXISTS_MESSAGE = "El tipo de deproducto ya se encuentra registrado";
-    public static final String TYPE_NOT_EXISTS_MESSAGE = "El tipo de deproducto no se encuentra registrado";
+    public static final String TYPE_NOT_EXISTS_MESSAGE = "El tipo de de producto no se encuentra registrado";
 
+
+    //ErrorAlertMessages para el carrito
+    public static final String CART_NOT_EXISTS_MESSAGE = "El carrito del usuario no se encuentra registado";
+    public static final String CART_ALREADY_EXISTS_MESSAGE = "El carrito del usuario ya se encuentra registado";
 }

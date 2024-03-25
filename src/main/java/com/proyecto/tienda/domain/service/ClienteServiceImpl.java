@@ -1,8 +1,10 @@
 package com.proyecto.tienda.domain.service;
 
+import com.proyecto.tienda.domain.dto.cart.CartRequestDto;
 import com.proyecto.tienda.domain.dto.cliente.ClienteDto;
 import com.proyecto.tienda.domain.dto.cliente.ClienteResponseDto;
 import com.proyecto.tienda.domain.repository.IClienteRepository;
+import com.proyecto.tienda.domain.usecase.ICartUseCase;
 import com.proyecto.tienda.exception.ErrorAlertMessages;
 import com.proyecto.tienda.exception.ErrorValidationExceptions;
 import com.proyecto.tienda.domain.usecase.IClienteUseCase;
@@ -28,9 +30,7 @@ public class ClienteServiceImpl implements IClienteUseCase {
      */
     private final IClienteRepository iClienteRepository;
 
-    /**
-     * Mensajes de excepciones error
-     */
+    private final ICartUseCase iCartUseCase;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -104,12 +104,17 @@ public class ClienteServiceImpl implements IClienteUseCase {
         }else if (iClienteRepository.getByEmail(newCliente.getEmail()).isPresent() || iClienteRepository.getByUsername(newCliente.getUsername()).isPresent()){
             throw new ErrorValidationExceptions(ErrorAlertMessages.USER_ALREADY_EXISTS_MESSAGE);
         }
-
         String passwordGenerated = generateRandomPassword(10);
         newCliente.setPassword(passwordEncoder.encode(passwordGenerated));
         newCliente.setActive(1);
         newCliente.setRole(Roles.USER);
-        iClienteRepository.save(newCliente);
+        var c = iClienteRepository.save(newCliente);
+
+        //crear el carrito del usuario
+        var cart = new CartRequestDto();
+        cart.setCustomerId(c.getId());
+        this.iCartUseCase.save(cart);
+
         return new ClienteResponseDto(passwordGenerated);
     }
 
@@ -139,6 +144,9 @@ public class ClienteServiceImpl implements IClienteUseCase {
         if (iClienteRepository.getById(id).isEmpty()) {
             throw new ErrorValidationExceptions(ErrorAlertMessages.USER_NOT_EXISTS_MESSAGE);
         }
+        //se elimina el carrito del usuario
+        this.iCartUseCase.delete(id);
+
         iClienteRepository.delete(id);
         return true;
     }

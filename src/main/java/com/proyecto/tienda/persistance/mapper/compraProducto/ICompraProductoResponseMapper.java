@@ -4,12 +4,13 @@ import com.proyecto.tienda.domain.dto.compraproducto.CompraProductoResponseDto;
 import com.proyecto.tienda.persistance.entity.CompraProductoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
 /**
  * Mapper para los CompraProductoResponseDto
  * Solo se mapean el nombre del producto, la cantidad y el total
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ICompraProductoResponseMapper {
 
     @Mapping(target = "compraEntity", ignore = true)
