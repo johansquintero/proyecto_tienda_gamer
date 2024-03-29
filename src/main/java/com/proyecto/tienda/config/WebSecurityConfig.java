@@ -52,8 +52,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**","/productos/uploads/**","/images/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/**").hasAnyRole(Roles.ADMIN,Roles.USER)
                         .requestMatchers(HttpMethod.POST,"/**").hasAnyRole(Roles.ADMIN,Roles.USER)
-                        .requestMatchers(HttpMethod.PUT,"/**").hasRole(Roles.ADMIN)
-                        .requestMatchers(HttpMethod.DELETE,"/**").hasRole(Roles.ADMIN)
+                        .requestMatchers(HttpMethod.PUT,"/**").hasAnyRole(Roles.ADMIN, Roles.USER)
+                        .requestMatchers(HttpMethod.DELETE,"/**").hasAnyRole(Roles.ADMIN,Roles.USER)
                         .anyRequest().authenticated()
                 );
         return http.build();
